@@ -6,23 +6,17 @@ const connectToDb = require('./config/connectToDb')
 const app = express()
 const PORT = process.env.PORT || '3000'
 
+connectToDb()
 
-
-// PREREQ MIDDLEWARE
+// MIDDLEWARE
 app.use(express.json())
+app.use(require('./config/validateToken'))
 app.use(cors())
 
-connectToDb()
 
 // ROUTES
 
 
-// POSTREQ MIDDLEWARE
-app.use((err, req, res, next)=>{
-    console.error(err.stack);
-    res.status(500).send('An error occurred')
-})
-// TODO:more helpful error messages
 
 app.listen(PORT, ()=>{
     console.log(`Express Server is listening on PORT: ${PORT}`);
