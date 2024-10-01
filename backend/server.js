@@ -3,6 +3,8 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const connectToDb = require('./config/connectToDb')
+const validateToken = require('./config/validateToken')
+
 const app = express()
 const PORT = process.env.PORT || '3000'
 
@@ -10,7 +12,7 @@ connectToDb()
 
 // MIDDLEWARE
 app.use(express.json())
-app.use(require('./config/validateToken'))
+app.use(validateToken)
 app.use(cors())
 
 

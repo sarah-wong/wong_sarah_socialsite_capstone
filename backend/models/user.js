@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     },
     access:{
         type: String,
-        enum: ['USER','MOD','ADMIN']
+        enum: ['USER','ADMIN']
     }
 },{
     timestamps:true

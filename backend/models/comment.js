@@ -9,13 +9,13 @@ const commentSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         required: [true, 'Comment needs an associated User']
     },
-    meta:{
-        likes: Number,
-        dislikes: Number,
-        postUnder: {
-            type: mongoose.SchemaTypes.ObjectId,
-            required: [true, 'Comment must be attached to a Post']
-        }
+    likes:{
+        type:Number,
+        min:0
+    },
+    dislikes:{
+        type:Number,
+        min:0
     }
 },{
     timestamps:true
