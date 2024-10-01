@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
         comments: [mongoose.SchemaTypes.ObjectId],
         likedPosts: [mongoose.SchemaTypes.ObjectId],
         dislikedPosts: [mongoose.SchemaTypes.ObjectId]
+    },
+    access:{
+        type: String,
+        enum: ['USER','MOD','ADMIN']
     }
 },{
     timestamps:true
