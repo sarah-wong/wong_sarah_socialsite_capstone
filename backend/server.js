@@ -19,8 +19,8 @@ app.use(cors())
 
 
 // ROUTES
-app.use('/users', userRouter)
-app.use('/posts', postRouter)
+app.use('/user', userRouter)
+app.use('/post', postRouter)
 
 
 app.listen(PORT, ()=>{

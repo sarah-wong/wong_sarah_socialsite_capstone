@@ -12,3 +12,31 @@
   display:flex;
   justify-content:space-evenly;
 }
+
+.formContainer{
+  border:1px solid blue;
+  margin:1rem auto;
+  width:50%;
+  padding:1rem;
+  display:grid;
+  gap:1rem;
+  grid-template-columns: repeat(2, 1fr)
+}
+form input{
+  margin: 0.5rem 0px;
+}
+.loginForm{
+  border:1px solid forestgreen;
+}
+.signupForm{
+  border:1px solid gold;
+}
+
+.loginForm, .signupForm{
+  border-radius:16px;
+  display:flex;
+  flex-flow:column nowrap;
+  align-items:center;
+  justify-content:space-evenly;
+  padding:0.5rem;
+}
