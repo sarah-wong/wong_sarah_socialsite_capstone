@@ -16,3 +16,5 @@ router.put('/:id', postsController.editPost)
 router.put('/:id/vote', postsController.voteOnPost)
 router.delete('/:id', postsController.deletePost)
 
+module.exports = router
+
