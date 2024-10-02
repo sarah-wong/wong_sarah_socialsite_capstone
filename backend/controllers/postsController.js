@@ -65,6 +65,10 @@ async function updatePost(req, res){
     }
 }
 
+async function commentOnPost(req, res){
+
+}
+
 // DELETE
 
 async function deletePost(req, res){

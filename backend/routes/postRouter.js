@@ -4,10 +4,12 @@ const ensureLoggedIn = require('../config/ensureLoggedIn')
 
 const router = express.Router()
 
+// seeing posts does not require login
 router.get('/', postsController.fetchPosts)
 router.get('/:id', postsController.fetchPost)
+
+// creating, updating and deleting posts requires login
 router.use(ensureLoggedIn)
-// posting, editing, and deleting require a logged-in user
 router.post('/', postsController.createPost)
 router.put('/:id', postsController.updatePost)
 router.delete('/:id', postsController.deletePost)
