@@ -1,5 +1,6 @@
 const Post = require('../models/post')
 
+
 // CREATE
 async function createPost(req, res){
     const userId = req.user._id
@@ -7,11 +8,13 @@ async function createPost(req, res){
     const post = await Post.create({
         title:title,
         content:content,
-        userId:userId,
-        likes:0,
-        dislikes:0,
         tags:tags,
-        comments:[]
+        comments:[],
+        meta:{
+            userId:userId,
+            likes:[],
+            dislikes:[]
+        }
     })
     res.json({post:post})
 }
@@ -21,43 +24,57 @@ async function fetchPost(req, res){
     const post = await Post.findById(id)
     res.json({post:post})
 }
-async function fetchAllPosts(req, res){
-    const posts = await Post.find()
+
+async function fetchPosts(req, res){
+
+    const filter = {}
+    // accepted filters are: title, user, tags
+    if(req.query.title){
+        filter.title = req.query.title
+    }
+    if(req.query.user){
+        filter.meta.userId = req.query.user
+    }
+    if(req.query.tags){
+        const tagList = req.query.tags.split(',')
+        filter.tags = tagList
+    }
+
+    const posts = await Post.find(filter)
     res.json({posts:posts})
 }
-// UPDATE
 
+// UPDATE
 
 async function updatePost(req, res){
     const id = req.params.id
     const {title, content, tags} = req.body
     const post = Post.findById(id);
 
-    // Cannot edit other user's posts
-    if(req.user && post.userId === req.user._id){
+    // Cannot edit other User's Posts
+    if(post.userId === req.user._id){
         Post.findByIdAndUpdate(id, {
-            ...post,
             title: title,
             content: content,
             tags: tags
         })
     }
-    else if (req.user){
-        res.status(403).json('Forbidden')
-    }
     else{
-        res.status(401).json('Unauthorized');
+        // HTTP 403 Forbidden
+        res.status(403).json('Access Denied')
     }
 }
+
 // DELETE
 
 async function deletePost(req, res){
+
     const id = req.params.id
     const {title, content, tags} = req.body
     const post = Post.findById(id);
 
-    // Cannot delete other user's posts unless you're an admin
-    if(req.user && (post.userId === req.user._id || req.user.access == 'ADMIN')){
+    // Cannot delete other User's Posts UNLESS you're an ADMIN
+    if(post.userId === req.user._id || req.user.access == 'ADMIN'){
         Post.findByIdAndUpdate(id, {
             ...post,
             title: title,
@@ -69,8 +86,8 @@ async function deletePost(req, res){
         res.status(403).json('Forbidden')
     }
     else{
-        res.status(401).json('Unauthorized');
+        res.status(401).json('Unauthorized')
     }
 }
 
-module.exports = {createPost, fetchPost, fetchAllPosts, updatePost, deletePost}
+module.exports = {createPost, fetchPost, fetchPosts, updatePost, deletePost}

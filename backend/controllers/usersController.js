@@ -21,11 +21,13 @@ async function login(req, res){
     const {email, password} = req.body
     const user = await User.findOne({email: email})
     if (!user) {
+        // HTTP 400 Bad Request
         res.status(400).json('Bad Credentials')
     }
 
     const match = await bcrypt.compare(password, user.password);
     if(!match) {
+        // HTTP 400 Bad Request
         res.status(400).json('Bad Credentials')
     }
 

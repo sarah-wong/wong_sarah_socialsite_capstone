@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const usernameRe = /^\w+$/
+const usernameRe = /^\w$/
 const emailRe = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new mongoose.Schema({
@@ -9,9 +9,8 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Username is required'],
         trim: true,
         unique: [true, 'Username is already taken'],
-        match: usernameRe,
-        minLength: 4,
-        maxLength: 30
+        match: [usernameRe, 'Username must consist of letters, numbers, and underscores'],
+        minLength: [4, 'Username must be at least 4 characters']
     },
     email: {
         type: String,
@@ -19,7 +18,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         lowercase: true,
         unique: [true, 'An account with that email already exists'],
-        match: emailRe
+        match: [emailRe, 'Please provide a valid email address']
     },
     password: {
         type: String,
@@ -28,7 +27,8 @@ const userSchema = new mongoose.Schema({
     },
     access:{
         type: String,
-        enum: ['USER','ADMIN']
+        enum: ['USER','ADMIN'],
+        default: 'USER'
     }
 },{
     timestamps:true

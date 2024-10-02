@@ -5,17 +5,17 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Comment cannot be blank']
     },
-    userId:{
-        type: mongoose.SchemaTypes.ObjectId,
-        required: [true, 'Comment needs an associated User']
-    },
-    likes:{
-        type:Number,
-        min:0
-    },
-    dislikes:{
-        type:Number,
-        min:0
+    meta:{
+        commenterId:{
+            type: mongoose.SchemaTypes.ObjectId,
+            required: [true, 'Comment needs an associated User']
+        },
+        usersLiked:{
+            type: [mongoose.SchemaTypes.ObjectId]
+        },
+        usersDisliked:{
+            type: [mongoose.SchemaTypes.ObjectId]
+        }
     }
 },{
     timestamps:true
