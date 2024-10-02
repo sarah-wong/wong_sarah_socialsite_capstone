@@ -1,25 +1,5 @@
 const mongoose = require('mongoose');
-
-const commentSchema = new mongoose.Schema({
-    text:{
-        type: String,
-        required: [true, 'Comment cannot be blank']
-    },
-    meta:{
-        commenterId:{
-            type: mongoose.SchemaTypes.ObjectId,
-            required: [true, 'Comment needs an associated User']
-        },
-        usersLiked:{
-            type: [mongoose.SchemaTypes.ObjectId]
-        },
-        usersDisliked:{
-            type: [mongoose.SchemaTypes.ObjectId]
-        }
-    }
-},{
-    timestamps:true
-})
+const Comment = require('./comment')
 
 const postSchema = new mongoose.Schema({
     title:{
@@ -34,21 +14,15 @@ const postSchema = new mongoose.Schema({
         type: [String]
     },
     comments: {
-        type: [commentSchema]
+        type: [Comment.schema]
     },
     meta:{
         posterId:{
             type: mongoose.SchemaTypes.ObjectId,
-            require: [true, 'Post needs an associated User'],
-            alias: 'userId'
+            require: [true, 'Post needs an associated User']
         },
-        usersLiked: {
-            type: [mongoose.SchemaTypes.ObjectId],
-            alias: 'likes'
-        },
-        usersDisliked: {
-            type: [mongoose.SchemaTypes.ObjectId],
-            alias: 'dislikes'
+        votes: {
+            type: mongoose.SchemaTypes.Map,
         }
     }
 },{

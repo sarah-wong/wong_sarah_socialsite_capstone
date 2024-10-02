@@ -8,8 +8,11 @@ const router = express.Router()
 router.get('/', postsController.fetchPosts)
 router.get('/:id', postsController.fetchPost)
 
-// creating, updating and deleting posts requires login
+// creating, editing, commenting, voting, and deleting requires login
 router.use(ensureLoggedIn)
 router.post('/', postsController.createPost)
-router.put('/:id', postsController.updatePost)
+router.post('/:id/comment', postsController.commentOnPost)
+router.put('/:id', postsController.editPost)
+router.put('/:id/vote', postsController.voteOnPost)
 router.delete('/:id', postsController.deletePost)
+

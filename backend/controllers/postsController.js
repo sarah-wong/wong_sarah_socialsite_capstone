@@ -1,4 +1,5 @@
 const Post = require('../models/post')
+const Comment = require('../models/comment')
 
 
 // CREATE
@@ -11,13 +12,32 @@ async function createPost(req, res){
         tags:tags,
         comments:[],
         meta:{
-            userId:userId,
-            likes:[],
-            dislikes:[]
+            posterId:userId,
+            votes: new Map()
         }
     })
     res.json({post:post})
 }
+
+async function commentOnPost(req, res){
+    const postId = req.params.id
+    const userId = req.user._id
+    const {text} = req.body
+
+    const post = await Post.findById(postId)
+
+    const comment = await Comment.create({
+        text:text,
+        commenterId:userId
+    })
+
+    await Post.findByIdAndUpdate(postId, {
+        comments: [...post.comments, comment]
+    })
+
+    res.json({comment:comment})
+}
+
 // READ
 async function fetchPost(req, res){
     const id = req.params.id
@@ -26,7 +46,6 @@ async function fetchPost(req, res){
 }
 
 async function fetchPosts(req, res){
-
     const filter = {}
     // accepted filters are: title, user, tags
     if(req.query.title){
@@ -46,18 +65,21 @@ async function fetchPosts(req, res){
 
 // UPDATE
 
-async function updatePost(req, res){
+async function editPost(req, res){
     const id = req.params.id
     const {title, content, tags} = req.body
     const post = Post.findById(id);
 
     // Cannot edit other User's Posts
     if(post.userId === req.user._id){
-        Post.findByIdAndUpdate(id, {
+        await Post.findByIdAndUpdate(id, {
             title: title,
             content: content,
             tags: tags
         })
+        const post = await Post.findById(id)
+        // HTTP 201 Created
+        res.status(201).json({post:post})
     }
     else{
         // HTTP 403 Forbidden
@@ -65,26 +87,33 @@ async function updatePost(req, res){
     }
 }
 
-async function commentOnPost(req, res){
+async function voteOnPost(req, res){
+    const postId = req.params.id
+    const userId = req.user._id
+    const {vote} = req.body
 
+    const newVotes = await Post.findById(postId).votes
+    newVotes.set(userId, vote)
+    
+    await Post.findByIdAndUpdate(postId, {
+        votes: newVotes
+    })
+
+    const post = await Post.findById(postId)
+    // HTTP 200 Success
+    res.status(200).json({post:post})
 }
 
 // DELETE
 
 async function deletePost(req, res){
-
     const id = req.params.id
-    const {title, content, tags} = req.body
     const post = Post.findById(id);
 
     // Cannot delete other User's Posts UNLESS you're an ADMIN
     if(post.userId === req.user._id || req.user.access == 'ADMIN'){
-        Post.findByIdAndUpdate(id, {
-            ...post,
-            title: title,
-            content: content,
-            tags: tags
-        })
+        await Post.findByIdAndDelete(id)
+        res.json({result:'Post successfully delete'})
     }
     else if (req.user){
         res.status(403).json('Forbidden')
@@ -94,4 +123,12 @@ async function deletePost(req, res){
     }
 }
 
-module.exports = {createPost, fetchPost, fetchPosts, updatePost, deletePost}
+module.exports = {
+    createPost,
+    commentOnPost, 
+    fetchPost, 
+    fetchPosts, 
+    editPost,
+    voteOnPost,
+    deletePost
+}
