@@ -35,6 +35,7 @@ async function createUser(req, res){
 
 async function login(req, res){
     const {email, password} = req.body
+    console.log(`login attempt: ${email} ${password}`);
     const user = await User.findOne({email: email})
     if (!user) {
         // HTTP 400 Bad Request
@@ -51,5 +52,19 @@ async function login(req, res){
     res.status(200).json(createJWT(user))
 }
 
+async function getCurrentUser(req, res){
+    if(!req.user){
+        // HTTP 401 Unauthorized
+        res.status(401).json('Not Logged In')
+    }
+    else{
+        // HTTP 200 Success
+        res.status(200).json({
+            name: req.user.name,
+            email: req.user.email,
+            access: req.user.access
+        })
+    }
+}
 
-module.exports = {createUser, login}
+module.exports = {createUser, login, getCurrentUser}

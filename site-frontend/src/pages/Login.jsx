@@ -1,9 +1,10 @@
 import {useState} from 'react'
 import axios from 'axios'
+import {redirect} from 'react-router-dom'
 
 // axios.defaults.baseURL = 'http://localhost:777'
 
-function Login() {
+function Login({setLoggedIn}) {
   const [loginData, setLoginData] = useState({
     email:'',
     password:'',
@@ -46,6 +47,12 @@ function Login() {
       password: loginData.password
     })
 
+    setLoginData({
+      ...loginData,
+      email:'',
+      password:''
+    })
+
     if(response.status !== 200){
       setFormError(
         'Login Failed! No account linked to that email and password...'
@@ -54,14 +61,11 @@ function Login() {
     else{
       const token = response.data
       localStorage.setItem('userAuthToken', token)
-      console.log(token);
+      console.log(`userAuthToken: ${token}`);
+      setLoggedIn(true)
     }
     
-    setLoginData({
-      ...loginData,
-      email:'',
-      password:''
-    })
+    
   }
   async function handleSignup(evt){
     evt.preventDefault()
@@ -69,21 +73,24 @@ function Login() {
 
     const response = await axios.post('http://localhost:7777/user/', signupData)
 
-    if(response.status !== 200){
-      setFormError('Registration Failed!')
-    }
-    else{
-      const token = response.data
-      console.log(token);
-      localStorage.setItem('userAuthToken', token)
-    }
-
     setSignupData({
       name:'',
       email:'',
       password:'',
       confirm:''
     })
+
+    if(response.status !== 200){
+      setFormError('Registration Failed!')
+    }
+    else{
+      const token = response.data
+      localStorage.setItem('userAuthToken', token)
+      console.log(`userAuthToken: ${token}`);
+      setLoggedIn(true)
+    }
+
+    
   }
 
   return (
