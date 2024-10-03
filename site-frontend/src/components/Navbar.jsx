@@ -1,13 +1,13 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-function Navbar() {
+function Navbar({loggedIn}) {
   return (
     <nav className="navbar">
         <Link className="navtab" to='/'>Home</Link>
-        <Link className="navtab" to='/login'>Login</Link>
-        <Link className="navtab" to='/post'>New Post</Link>
-        <Link className="navtab" to='/profile'>My Profile</Link>
+        {!loggedIn&&<Link className="navtab" to='/login'>Login</Link>}
+        {loggedIn&&<Link className="navtab" to='/post'>New Post</Link>}
+        {loggedIn&&<Link className="navtab" to='/profile'>My Profile</Link>}
     </nav>
   )
 }

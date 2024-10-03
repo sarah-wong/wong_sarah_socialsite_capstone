@@ -20,10 +20,9 @@ function App() {
   })
 
   useEffect(()=>{
-    console.log('login effect triggered');
-    
 
     if(loggedIn){
+      console.log('login effect triggered');
       async function getLoggedinUser(){
         const token = localStorage.getItem('userAuthToken')
         const url = `http://localhost:7777/user?token=${token}`
@@ -39,13 +38,27 @@ function App() {
       }
       getLoggedinUser()
     }
+    else{
+      console.log('logging out');
+      localStorage.removeItem('userAuthToken')
+      setCurrentUser({
+        name:'',
+        email:'',
+        access:''
+      })
+    }
   },[loggedIn])
 
   return (
     <div className="app">
       {loggedIn&&
         <div className="userDisplay">
-          Welcome <b>{currentUser.name}</b> <i>({currentUser.email})</i>
+          <div className="welcomeMsg">
+            Welcome <b>{currentUser.access!=='USER'&&`[${currentUser.access}]`}</b> {currentUser.name} <i>({currentUser.email}) </i>
+          </div>
+          <button onClick={()=>setLoggedIn(false)}>
+            Log Out
+          </button>
         </div>
       }
       <Navbar loggedIn={loggedIn}/>

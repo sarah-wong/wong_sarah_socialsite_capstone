@@ -44,3 +44,9 @@ form input{
 .formError{
   color:red;
 }
+.userDisplay{
+  margin:auto;
+  padding:1rem;
+  display:flex;
+  justify-content:space-between;
+}
