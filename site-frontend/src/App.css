@@ -103,3 +103,18 @@ form input{
 .inlineBtn:hover{
   border-color:transparent;
 }
+.feed{
+  border:1px solid grey;
+  height:fit-content;
+  padding:1rem;
+  display:flex;
+  flex-flow:column nowrap;
+  align-items:center;
+  gap:1rem;
+}
+.post{
+  border:1px solid white;
+  border-radius:16px;
+  width:fit-content;
+  padding:0px 1rem 8px;
+}

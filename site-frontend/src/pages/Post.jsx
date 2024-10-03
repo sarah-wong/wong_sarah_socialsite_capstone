@@ -39,6 +39,7 @@ function Post() {
               #{tag} <button className="inlineBtn delete">X</button>
             </span>)}
           </div>
+          <button type="submit">Create Post</button>
         </form>
     </div>
   )
