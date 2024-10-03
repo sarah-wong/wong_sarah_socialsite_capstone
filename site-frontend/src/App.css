@@ -104,7 +104,7 @@ form input{
   border-color:transparent;
 }
 .feed{
-  border:1px solid grey;
+  /* border:1px solid grey; */
   height:fit-content;
   padding:1rem;
   display:flex;
@@ -115,7 +115,6 @@ form input{
 .post{
   border:1px solid white;
   border-radius:16px;
-  width:fit-content;
-  max-width:500px;
+  width:500px;
   padding:0px 1rem 8px;
 }
