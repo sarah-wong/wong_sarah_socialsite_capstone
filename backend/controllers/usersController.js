@@ -12,6 +12,7 @@ function createJWT(user){
 }
 
 async function createUser(req, res){
+    console.log('signup request recieved');
     const saltRounds = 10
     const {name, email, password, confirm} = req.body
     
@@ -28,6 +29,7 @@ async function createUser(req, res){
         })
         // HTTP 200 Success
         res.status(200).json(createJWT(user))
+        console.log('signup success!');
     })
 }
 

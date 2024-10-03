@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const usernameRe = /^\w$/
+const usernameRe = /^\w+$/
 const emailRe = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new mongoose.Schema({

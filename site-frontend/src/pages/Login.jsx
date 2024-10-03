@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:777'
+// axios.defaults.baseURL = 'http://localhost:777'
 
 function Login() {
   const [loginData, setLoginData] = useState({
@@ -41,7 +41,7 @@ function Login() {
   async function handleLogin(evt){
     evt.preventDefault()
     setFormError('')
-    const response = await axios.post('/user/login',{
+    const response = await axios.post('http://localhost:7777/user/login',{
       email: loginData.email,
       password: loginData.password
     })
@@ -54,6 +54,7 @@ function Login() {
     else{
       const token = response.data
       localStorage.setItem('userAuthToken', token)
+      console.log(token);
     }
     
     setLoginData({
@@ -66,22 +67,30 @@ function Login() {
     evt.preventDefault()
     setFormError('')
 
-    const response = await axios.post('/user', signupData)
+    const response = await axios.post('http://localhost:7777/user/', signupData)
 
     if(response.status !== 200){
       setFormError('Registration Failed!')
     }
     else{
       const token = response.data
+      console.log(token);
       localStorage.setItem('userAuthToken', token)
     }
+
+    setSignupData({
+      name:'',
+      email:'',
+      password:'',
+      confirm:''
+    })
   }
 
   return (
     <div className="page">
       <h1>Join Us, Thrive</h1>
       <div className="formContainer">
-        <form action="" className="loginForm">
+        <form action="" className="loginForm" onSubmit={handleLogin}>
           <h3>Sign In</h3>
           <input type="email" name="email" placeholder='email' required
           value={loginData.email}
@@ -98,7 +107,7 @@ function Login() {
           <br />
           <button type="submit">Login</button>
         </form>
-        <form action="" className="signupForm">
+        <form action="" className="signupForm" onSubmit={handleSignup}>
           <h3>Register</h3>
           <input type="text" name="name" placeholder='username' required
           onChange={handleSignupFieldChange}
