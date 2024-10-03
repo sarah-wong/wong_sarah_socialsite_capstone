@@ -17,7 +17,7 @@ function Login() {
     confirm:''
   })
 
-  const [formError, setFormError] = useState(null)
+  const [formError, setFormError] = useState('')
 
   function handleLoginCheckbox(evt){
     setLoginData({
@@ -124,6 +124,9 @@ function Login() {
           <br />
           <button type="submit">Sign Up</button>
         </form>
+      </div>
+      <div className="formError">
+        {formError}
       </div>
     </div>
   )

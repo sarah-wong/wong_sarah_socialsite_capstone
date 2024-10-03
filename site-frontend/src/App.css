@@ -40,3 +40,7 @@ form input{
   justify-content:space-evenly;
   padding:0.5rem;
 }
+
+.formError{
+  color:red;
+}
