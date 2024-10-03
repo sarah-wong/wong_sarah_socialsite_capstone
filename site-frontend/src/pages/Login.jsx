@@ -1,10 +1,10 @@
 import {useState} from 'react'
 import axios from 'axios'
-import {redirect} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 
 // axios.defaults.baseURL = 'http://localhost:777'
 
-function Login({setLoggedIn}) {
+function Login({loggedIn, setLoggedIn}) {
   const [loginData, setLoginData] = useState({
     email:'',
     password:'',
@@ -71,7 +71,7 @@ function Login({setLoggedIn}) {
     evt.preventDefault()
     setFormError('')
 
-    const response = await axios.post('http://localhost:7777/user/', signupData)
+    const response = await axios.post('http://localhost:7777/user', signupData)
 
     setSignupData({
       name:'',
@@ -95,7 +95,8 @@ function Login({setLoggedIn}) {
 
   return (
     <div className="page">
-      <h1>Join Us, Thrive</h1>
+      {loggedIn&& <Navigate to='/' replace={true}/>}
+      <h1>Login Page</h1>
       <div className="formContainer">
         <form action="" className="loginForm" onSubmit={handleLogin}>
           <h3>Sign In</h3>

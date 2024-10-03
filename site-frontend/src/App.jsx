@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, redirect} from 'react-router-dom'
 import axios from 'axios'
 import './App.css'
 
@@ -64,7 +64,9 @@ function App() {
       <Navbar loggedIn={loggedIn}/>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/login' element={<Login setLoggedIn={setLoggedIn}/>}/>
+        <Route path='/login' element={
+          <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+        }/>
         <Route path='/post' element={<Post/>}/>
         <Route path='/profile' element={<Profile/>}/>
       </Routes>
