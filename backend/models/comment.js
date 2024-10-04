@@ -5,10 +5,9 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Comment cannot be blank']
     },
-    commenterId:{
+    username:{
         type: mongoose.SchemaTypes.ObjectId,
-        required: [true, 'Comment needs an associated User'],
-        alias: 'user'
+        required: [true, 'Comment needs an associated User']
     }
 },{
     timestamps:true

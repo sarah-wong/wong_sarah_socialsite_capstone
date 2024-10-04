@@ -67,7 +67,7 @@ function App() {
         <Route path='/login' element={
           <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         }/>
-        <Route path='/post' element={<Post/>}/>
+        <Route path='/post' element={<Post currentUser={currentUser}/>}/>
         <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </div>

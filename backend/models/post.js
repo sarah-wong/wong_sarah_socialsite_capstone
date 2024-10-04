@@ -13,13 +13,13 @@ const postSchema = new mongoose.Schema({
     tags: {
         type: [String]
     },
-    comments: {
-        type: [Comment.schema]
-    },
+    username:{
+        type: String,
+        require: [true, 'Post needs and associated user']
+    },   
     meta:{
-        posterId:{
-            type: mongoose.SchemaTypes.ObjectId,
-            require: [true, 'Post needs an associated User']
+        comments: {
+            type: [Comment.schema]
         },
         votes: {
             type: mongoose.SchemaTypes.Map,

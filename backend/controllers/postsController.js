@@ -4,15 +4,16 @@ const Comment = require('../models/comment')
 
 // CREATE
 async function createPost(req, res){
-    const userId = req.user._id
+    const username = req.user.name
     const {title, content, tags} = req.body
     const post = await Post.create({
         title:title,
         content:content,
         tags:tags,
-        comments:[],
+        username:username,
         meta:{
-            posterId:userId,
+            
+            comments:[],
             votes: new Map()
         }
     })
@@ -21,14 +22,14 @@ async function createPost(req, res){
 
 async function commentOnPost(req, res){
     const postId = req.params.id
-    const userId = req.user._id
+    const username = req.user.name
     const {text} = req.body
 
     const post = await Post.findById(postId)
 
     const comment = await Comment.create({
         text:text,
-        commenterId:userId
+        username:username
     })
 
     await Post.findByIdAndUpdate(postId, {
@@ -67,7 +68,7 @@ async function fetchPosts(req, res){
 
 async function editPost(req, res){
     const id = req.params.id
-    const {title, content, tags} = req.body
+    const {title, content, username, tags} = req.body
     const post = Post.findById(id);
 
     // Cannot edit other User's Posts
@@ -75,6 +76,7 @@ async function editPost(req, res){
         await Post.findByIdAndUpdate(id, {
             title: title,
             content: content,
+            username: username,
             tags: tags
         })
         const post = await Post.findById(id)

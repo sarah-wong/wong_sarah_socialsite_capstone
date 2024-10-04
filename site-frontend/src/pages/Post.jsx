@@ -1,10 +1,11 @@
 import {useState, useRef} from 'react'
 import axios from 'axios'
 
-function Post() {
+function Post({currentUser}) {
   const [formData, setFormData] = useState({
     title:'',
     content:'',
+    username: currentUser.name,
     tags:[]
   })
 
@@ -52,6 +53,7 @@ function Post() {
     setFormData({
       title:'',
       content:'',
+      username: currentUser.name,
       tags:[]
     })
     if(response.status !== 200){
@@ -63,6 +65,7 @@ function Post() {
     <div className="page">
       <h1>New Post</h1>
       <form className="newPostForm" onSubmit={handleCreatePost}>
+          <h3>@{formData.username}</h3>
           <input type="text" className="titleField" name="title" placeholder="Post Title" value={formData.title} onChange={handleFormChange}/>
           <textarea className="contentField" name="content" placeholder="Type something..." value={formData.content} onChange={handleFormChange}/>
           <input type="text" placeholder="Add tags... (optional)" onKeyUp={handleAddTag} onKeyDown={blockSubmit} name='ignore'/>
