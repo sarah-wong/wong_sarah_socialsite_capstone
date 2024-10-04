@@ -5,7 +5,7 @@ import './App.css'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
-import Post from './pages/Post'
+import Post from './pages/NewPost'
 import Profile from './pages/Profile'
 
 import Navbar from './components/Navbar'
@@ -67,7 +67,7 @@ function App() {
         <Route path='/login' element={
           <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         }/>
-        <Route path='/post' element={<Post currentUser={currentUser}/>}/>
+        <Route path='/post' element={<NewPost currentUser={currentUser}/>}/>
         <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </div>
