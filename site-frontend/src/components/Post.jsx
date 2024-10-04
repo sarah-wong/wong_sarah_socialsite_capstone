@@ -9,7 +9,7 @@ function Post({post}) {
       <div className="flexbox userInfoBox">
         <img src="vite.svg" alt={post.username} className="pfp" />
         <b className='lefty'>@{post.username}</b>
-        {currentUser.name === post.username&&
+        {currentUser._id === post.meta.userId&&
           <button className="inlineBtn">edit</button>}
       </div>
         <h3 className='postHeader'>{post.title}</h3>

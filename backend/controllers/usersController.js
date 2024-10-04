@@ -59,11 +59,7 @@ async function getCurrentUser(req, res){
     }
     else{
         // HTTP 200 Success
-        res.status(200).json({
-            name: req.user.name,
-            email: req.user.email,
-            access: req.user.access
-        })
+        res.status(200).json(req.user)
     }
 }
 

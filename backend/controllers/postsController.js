@@ -12,7 +12,7 @@ async function createPost(req, res){
         tags:tags,
         username:username,
         meta:{
-            
+            userId:req.user._id,
             comments:[],
             votes: new Map()
         }
