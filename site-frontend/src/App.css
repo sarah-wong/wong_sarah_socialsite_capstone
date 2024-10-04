@@ -121,3 +121,9 @@ form input{
 .postHeader{
   text-align:left;
 }
+.flexbox{
+  display:flex;
+}
+.righty{
+  margin-left:auto;
+}

@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, createContext, useContext} from 'react'
 import {Route, Routes} from 'react-router-dom'
 import axios from 'axios'
 import './App.css'
@@ -10,9 +10,13 @@ import Profile from './pages/Profile'
 
 import Navbar from './components/Navbar'
 
+export const CurrentUserContext = createContext()
+
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('userAuthToken')!=null)
+  
+
   const [currentUser, setCurrentUser] = useState({
     name:'',
     email:'',
@@ -50,27 +54,30 @@ function App() {
   },[loggedIn])
 
   return (
-    <div className="app">
-      {loggedIn&&
-        <div className="userDisplay">
-          <div className="welcomeMsg">
-            Welcome <b>{currentUser.access!=='USER'&&`[${currentUser.access}]`}</b> {currentUser.name} <i>({currentUser.email}) </i>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="app">
+        {loggedIn&&
+          <div className="userDisplay">
+            <div className="welcomeMsg">
+              Welcome <b>{currentUser.access!=='USER'&&`[${currentUser.access}]`}</b> {currentUser.name} <i>({currentUser.email}) </i>
+            </div>
+            <button onClick={()=>setLoggedIn(false)}>
+              Log Out
+            </button>
           </div>
-          <button onClick={()=>setLoggedIn(false)}>
-            Log Out
-          </button>
-        </div>
-      }
-      <Navbar loggedIn={loggedIn}/>
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/login' element={
-          <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-        }/>
-        <Route path='/post' element={<PostForm currentUser={currentUser}/>}/>
-        <Route path='/profile' element={<Profile/>}/>
-      </Routes>
-    </div>
+        }
+        <Navbar loggedIn={loggedIn}/>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={
+            <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+          }/>
+          <Route path='/post' element={
+            <PostForm post={null}/>}/>
+          <Route path='/profile' element={<Profile/>}/>
+        </Routes>
+      </div>
+    </CurrentUserContext.Provider>
   )
 }
 

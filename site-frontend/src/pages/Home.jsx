@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
 import Post from '../components/Post'
 
@@ -24,7 +24,7 @@ function Home() {
       <h1>Home</h1>
       <div className="feed">
         {feed.map((post)=>(
-          <Post post={post}/>
+          <Post post={post} current/>
           ))}
       </div>
     </div>

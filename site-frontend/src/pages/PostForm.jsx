@@ -1,10 +1,12 @@
-import {useState, useRef} from 'react'
+import {useState, useContext} from 'react'
 import axios from 'axios'
+import {CurrentUserContext} from '../App'
 
-function PostForm({currentUser}) {
-  const [formData, setFormData] = useState({
-    title:'',
-    content:'',
+function PostForm({ post}) {
+  const currentUser = useContext(CurrentUserContext)
+  const [formData, setFormData] = useState(post||{
+    title: '',
+    content: '',
     username: currentUser.name,
     tags:[]
   })
