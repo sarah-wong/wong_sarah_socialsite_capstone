@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import Post from '../components/Post'
 
 function Home() {
   const [feed, setFeed] = useState([])
@@ -23,17 +24,7 @@ function Home() {
       <h1>Home</h1>
       <div className="feed">
         {feed.map((post)=>(
-          <div className="post">
-            <h3>@{post.username} &mdash; {post.title}</h3>
-            <p>{post.content}</p>
-            <div className="tagContainer">
-              {post.tags.map((tag)=>(
-                <span className="tag" key={tag}>
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
+          <Post post={post}/>
           ))}
       </div>
     </div>

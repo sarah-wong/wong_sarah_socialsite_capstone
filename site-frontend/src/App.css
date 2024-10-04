@@ -118,3 +118,6 @@ form input{
   width:500px;
   padding:0px 1rem 8px;
 }
+.postHeader{
+  text-align:left;
+}

@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {Route, Routes, redirect} from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
 import axios from 'axios'
 import './App.css'
 
@@ -12,15 +12,15 @@ import Navbar from './components/Navbar'
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('userAuthToken')!=null)
   const [currentUser, setCurrentUser] = useState({
     name:'',
     email:'',
     access:''
   })
 
+  // Retrieve user data from authToken
   useEffect(()=>{
-
     if(loggedIn){
       console.log('login effect triggered');
       async function getLoggedinUser(){
