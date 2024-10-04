@@ -5,7 +5,7 @@ import './App.css'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
-import Post from './pages/NewPost'
+import NewPost from './pages/NewPost'
 import Profile from './pages/Profile'
 
 import Navbar from './components/Navbar'
