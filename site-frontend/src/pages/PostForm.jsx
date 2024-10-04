@@ -84,4 +84,4 @@ function PostForm({currentUser}) {
   )
 }
 
-export default Post
+export default PostForm
