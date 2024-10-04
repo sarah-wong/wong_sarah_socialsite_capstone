@@ -1,7 +1,7 @@
 import {useState, useRef} from 'react'
 import axios from 'axios'
 
-function Post({currentUser}) {
+function PostForm({currentUser}) {
   const [formData, setFormData] = useState({
     title:'',
     content:'',
