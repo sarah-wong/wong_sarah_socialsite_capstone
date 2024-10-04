@@ -23,7 +23,7 @@ function Home() {
       <div className="feed">
         {feed.map((post)=>(
           <div className="post">
-            <h3>@{post.username} - {post.title}</h3>
+            <h3>@{post.username} &mdash; {post.title}</h3>
             <p>{post.content}</p>
             <div className="tagContainer">
               {post.tags.map((tag)=>(
