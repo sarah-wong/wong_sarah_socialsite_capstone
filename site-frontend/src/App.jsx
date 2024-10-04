@@ -15,8 +15,6 @@ export const CurrentUserContext = createContext()
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem('userAuthToken')!=null)
-  
-
   const [currentUser, setCurrentUser] = useState({
     name:'',
     email:'',
