@@ -56,8 +56,9 @@ function Post({currentUser}) {
       username: currentUser.name,
       tags:[]
     })
-    if(response.status !== 200){
+    if(response.status !== 201){
       console.error('Something when wrong with posting');
+      console.log(response.statusText);
     }
   }
 

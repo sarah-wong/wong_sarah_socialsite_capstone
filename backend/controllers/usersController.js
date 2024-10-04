@@ -27,8 +27,8 @@ async function createUser(req, res){
             email:email,
             password:result
         })
-        // HTTP 200 Success
-        res.status(200).json(createJWT(user))
+        // HTTP 201 Created
+        res.status(201).json(createJWT(user))
         console.log('signup success!');
     })
 }

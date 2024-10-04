@@ -57,6 +57,7 @@ function Login({loggedIn, setLoggedIn}) {
       setFormError(
         'Login Failed! No account linked to that email and password...'
       )
+      console.log(response.statusText);
     }
     else{
       const token = response.data
@@ -80,8 +81,9 @@ function Login({loggedIn, setLoggedIn}) {
       confirm:''
     })
 
-    if(response.status !== 200){
+    if(response.status !== 201){
       setFormError('Registration Failed!')
+      console.log(response.statusText);
     }
     else{
       const token = response.data

@@ -17,7 +17,8 @@ async function createPost(req, res){
             votes: new Map()
         }
     })
-    res.json({post:post})
+    // HTTP 201 Created
+    res.status(201).json({post:post})
 }
 
 async function commentOnPost(req, res){
@@ -36,14 +37,16 @@ async function commentOnPost(req, res){
         comments: [...post.comments, comment]
     })
 
-    res.json({comment:comment})
+    // HTTP 201 Created
+    res.status(201).json({comment:comment})
 }
 
 // READ
 async function fetchPost(req, res){
     const id = req.params.id
     const post = await Post.findById(id)
-    res.json({post:post})
+    // HTTP 200 Success
+    res.status(200).json({post:post})
 }
 
 async function fetchPosts(req, res){
@@ -61,7 +64,8 @@ async function fetchPosts(req, res){
     }
 
     const posts = await Post.find(filter)
-    res.json({posts:posts})
+    // HTTP 200 Success
+    res.status(200).json({posts:posts})
 }
 
 // UPDATE
@@ -72,7 +76,7 @@ async function editPost(req, res){
     const post = Post.findById(id);
 
     // Cannot edit other User's Posts
-    if(post.userId === req.user._id){
+    if(post.meta.userId === req.user._id){
         await Post.findByIdAndUpdate(id, {
             title: title,
             content: content,
@@ -80,8 +84,8 @@ async function editPost(req, res){
             tags: tags
         })
         const post = await Post.findById(id)
-        // HTTP 201 Created
-        res.status(201).json({post:post})
+        // HTTP 200 Success
+        res.status(200).json({post:post})
     }
     else{
         // HTTP 403 Forbidden
@@ -113,9 +117,10 @@ async function deletePost(req, res){
     const post = Post.findById(id);
 
     // Cannot delete other User's Posts UNLESS you're an ADMIN
-    if(post.userId === req.user._id || req.user.access == 'ADMIN'){
+    if(post.meta.userId === req.user._id || req.user.access == 'ADMIN'){
         await Post.findByIdAndDelete(id)
-        res.json({result:'Post successfully delete'})
+        // HTTP 200 Success
+        res.status(200).json({result:'Post successfully delete'})
     }
     else if (req.user){
         res.status(403).json('Forbidden')

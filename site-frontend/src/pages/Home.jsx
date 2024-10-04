@@ -9,6 +9,7 @@ function Home() {
       const response = await axios.get('http://localhost:7777/post')
       if(response.status !== 200){
         console.error('Error retrieving posts');
+        console.log(response.statusText);
       }
       const posts = await response.data.posts
       setFeed(posts)

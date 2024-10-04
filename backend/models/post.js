@@ -18,6 +18,9 @@ const postSchema = new mongoose.Schema({
         require: [true, 'Post needs and associated user']
     },   
     meta:{
+        userId:{
+            type: mongoose.SchemaTypes.ObjectId
+        },
         comments: {
             type: [Comment.schema]
         },
