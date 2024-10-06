@@ -77,7 +77,7 @@ function App() {
             <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
           }/>
           <Route path='/post/new' element={<PostForm/>}/>
-          <Route path='/post/:id' element={<PostForm/>}/>
+          <Route path='/post/:id/edit' element={<PostForm/>}/>
           <Route path='/profile' element={<Profile/>}/>
         </Routes>
       </div>

@@ -70,6 +70,10 @@ function Post({post, setPost}) {
     })
     return dateStr
   }
+
+  function goToEditForm(){
+    navigate(`/post/${post._id}/edit`)
+  }
   
   return (
     <div className="post">
@@ -80,8 +84,7 @@ function Post({post, setPost}) {
           {formatDate(post.createdAt)}
         </i>
         {currentUser._id === post.meta.userId&&
-          <button className="iconBtn edit" alt="edit" onClick={()=>
-            navigate(`/post/${post._id}`)}>
+          <button className="iconBtn edit" alt="edit" onClick={goToEditForm}>
             </button>
             }
       </div>

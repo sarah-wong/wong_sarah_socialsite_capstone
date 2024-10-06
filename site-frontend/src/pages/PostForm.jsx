@@ -1,7 +1,7 @@
 import {useState, useContext, useEffect} from 'react'
 import axios from 'axios'
 import {CurrentUserContext} from '../App'
-import {useParams} from 'react-router-dom'
+import {useParams, useNavigate} from 'react-router-dom'
 
 function PostForm() {
   const currentUser = useContext(CurrentUserContext)
@@ -13,7 +13,7 @@ function PostForm() {
     tags:[]
   })
 
-  axios.defaults.baseURL = 'http://localhost:7777'
+  const navigate = useNavigate()
   
 
   function handleFormChange(evt){
@@ -83,6 +83,7 @@ function PostForm() {
         console.log(response.statusText);
       }
     }
+    navigate('/')
   }
 
   useEffect(()=>{
@@ -117,7 +118,7 @@ function PostForm() {
               </span>
             ))}
           </div>
-          <button type="submit">Create Post</button>
+          <button type="submit">{id?'Edit':'Create'}</button>
         </form>
     </div>
   )
