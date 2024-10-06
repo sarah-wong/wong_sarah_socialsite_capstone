@@ -17,7 +17,7 @@ async function createPost(req, res){
             votes: new Map()
         }
     })
-    // HTTP 201 Created
+    // 201 Created
     res.status(201).json({post:post})
 }
 
@@ -46,7 +46,7 @@ async function commentOnPost(req, res){
 
     const updatedPost = await Post.findById(postId)
 
-    // HTTP 201 Created
+    // 201 Created
     res.status(201).json({post:updatedPost})
 }
 
@@ -54,7 +54,7 @@ async function commentOnPost(req, res){
 async function fetchPost(req, res){
     const id = req.params.id
     const post = await Post.findById(id)
-    // HTTP 200 Success
+    // 200 Success
     res.status(200).json({post:post})
 }
 
@@ -73,7 +73,7 @@ async function fetchPosts(req, res){
     }
 
     const posts = await Post.find(filter)
-    // HTTP 200 Success
+    // 200 Success
     res.status(200).json({posts:posts})
 }
 
@@ -93,11 +93,11 @@ async function editPost(req, res){
             tags: tags
         })
         const post = await Post.findById(id)
-        // HTTP 200 Success
+        // 200 Success
         res.status(200).json({post:post})
     }
     else{
-        // HTTP 403 Forbidden
+        // 403 Forbidden
         console.log('ID Mismatch!');
         console.log(`poster's uid: ${post.meta.userId}`);
         console.log(`attempted access: ${req.user._id}`);

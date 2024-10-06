@@ -17,7 +17,7 @@ async function createUser(req, res){
     const {name, email, password, confirm} = req.body
     
     if(password !== confirm){
-        // HTTP 400 Bad Request
+        // 400 Bad Request
         res.status(400).json('Bad Credentials')
     }
 
@@ -27,7 +27,7 @@ async function createUser(req, res){
             email:email,
             password:result
         })
-        // HTTP 201 Created
+        // 201 Created
         res.status(201).json(createJWT(user))
         console.log('signup success!');
     })
@@ -38,27 +38,27 @@ async function login(req, res){
     console.log(`login attempt: ${email}`);
     const user = await User.findOne({email: email})
     if (!user) {
-        // HTTP 400 Bad Request
+        // 400 Bad Request
         res.status(400).json('Bad Credentials')
     }
 
     const match = await bcrypt.compare(password, user.password);
     if(!match) {
-        // HTTP 400 Bad Request
+        // 400 Bad Request
         res.status(400).json('Bad Credentials')
     }
 
-    // HTTP 200 Success
+    // 200 Success
     res.status(200).json(createJWT(user))
 }
 
 async function getCurrentUser(req, res){
     if(!req.user){
-        // HTTP 401 Unauthorized
+        // 401 Unauthorized
         res.status(401).json('Not Logged In')
     }
     else{
-        // HTTP 200 Success
+        // 200 Success
         res.status(200).json(req.user)
     }
 }
