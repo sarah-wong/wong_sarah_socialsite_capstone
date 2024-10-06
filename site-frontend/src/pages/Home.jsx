@@ -18,13 +18,21 @@ function Home() {
     getPostFeed()
   },[])
 
+  function commentOnPost(comment, idx){
+    setFeed((feed)=>{
+      const targetPost = feed[idx]
+      targetPost.meta.comments = [...postComments, comment]
+      feed.splice(idx, 1, targetPost)
+      return feed
+    })
+  }
 
   return (
     <div className="page">
       <h1>Home</h1>
       <div className="feed">
-        {feed.map((post)=>(
-          <Post post={post} current/>
+        {feed.map((post, idx)=>(
+          <Post post={post} idx={idx} commentOnPost={commentOnPost}/>
           ))}
       </div>
     </div>

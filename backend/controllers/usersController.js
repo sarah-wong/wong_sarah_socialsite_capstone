@@ -35,7 +35,7 @@ async function createUser(req, res){
 
 async function login(req, res){
     const {email, password} = req.body
-    console.log(`login attempt: ${email} ${password}`);
+    console.log(`login attempt: ${email}`);
     const user = await User.findOne({email: email})
     if (!user) {
         // HTTP 400 Bad Request

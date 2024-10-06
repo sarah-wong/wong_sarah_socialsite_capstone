@@ -24,17 +24,24 @@ async function createPost(req, res){
 async function commentOnPost(req, res){
     const postId = req.params.id
     const username = req.user.name
+    const userId = req.user_id
     const {text} = req.body
 
     const post = await Post.findById(postId)
 
     const comment = await Comment.create({
         text:text,
-        username:username
+        username:username,
+        meta:{
+            userId: userId
+        }
     })
 
     await Post.findByIdAndUpdate(postId, {
-        comments: [...post.comments, comment]
+        meta: {
+            ...post.meta,
+            comments: [...post.meta.comments, comment]
+        }
     })
 
     // HTTP 201 Created

@@ -139,3 +139,11 @@ form input{
   border-bottom:1px solid lightgrey;
   padding:8px 1rem;
 }
+.commentContainer{
+  display:flex;
+  flex-flow:column nowrap;
+  gap:1rem;
+}
+.comment{
+  border:1px solid lightgrey;
+}
