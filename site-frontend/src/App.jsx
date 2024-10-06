@@ -1,4 +1,4 @@
-import {useState, useEffect, createContext, useContext} from 'react'
+import {useState, useEffect, createContext} from 'react'
 import {Route, Routes} from 'react-router-dom'
 import axios from 'axios'
 import './App.css'
@@ -21,13 +21,15 @@ function App() {
     access:''
   })
 
+  axios.defaults.baseURL = 'http://localhost:7777'
+
   // Retrieve user data from authToken
   useEffect(()=>{
     if(loggedIn){
       console.log('login effect triggered');
       async function getLoggedinUser(){
         const token = localStorage.getItem('userAuthToken')
-        const url = `http://localhost:7777/user?token=${token}`
+        const url = `/user?token=${token}`
         const response = await axios.get(url)
         if(response.status !== 200){
           console.error('Token failure');
@@ -51,6 +53,10 @@ function App() {
     }
   },[loggedIn])
 
+  function getPost(id){
+
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -70,8 +76,8 @@ function App() {
           <Route path='/login' element={
             <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
           }/>
-          <Route path='/post' element={
-            <PostForm post={null}/>}/>
+          <Route path='/post/new' element={<PostForm/>}/>
+          <Route path='/post/:id' element={<PostForm/>}/>
           <Route path='/profile' element={<Profile/>}/>
         </Routes>
       </div>

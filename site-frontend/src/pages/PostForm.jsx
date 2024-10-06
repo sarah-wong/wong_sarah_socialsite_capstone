@@ -1,15 +1,20 @@
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import axios from 'axios'
 import {CurrentUserContext} from '../App'
+import {useParams} from 'react-router-dom'
 
-function PostForm({ post}) {
+function PostForm() {
   const currentUser = useContext(CurrentUserContext)
-  const [formData, setFormData] = useState(post||{
+  const {id} = useParams()
+  const [formData, setFormData] = useState({
     title: '',
     content: '',
     username: currentUser.name,
     tags:[]
   })
+
+  axios.defaults.baseURL = 'http://localhost:7777'
+  
 
   function handleFormChange(evt){
     setFormData({
@@ -47,27 +52,59 @@ function PostForm({ post}) {
       tags: [...start, ...end]
     })
   }
-  function handleCreatePost(evt){
+  async function handleSubmitPost(evt){
     evt.preventDefault()
     const token = localStorage.getItem('userAuthToken')
-    const url = `http://localhost:7777/post?token=${token}`
-    const response = axios.post(url, formData)
-    setFormData({
-      title:'',
-      content:'',
-      username: currentUser.name,
-      tags:[]
-    })
-    if(response.status !== 201){
-      console.error('Something when wrong with posting');
-      console.log(response.statusText);
+    if(!id){
+      const url = `/post?token=${token}`
+      const response = await axios.post(url, formData)
+      setFormData({
+        title:'',
+        content:'',
+        username: currentUser.name,
+        tags:[]
+      })
+      if(response.status !== 201){
+        console.error('Something when wrong with post creation');
+        console.log(response.statusText);
+      }
+    }
+    else{
+      const url = `/post/${id}?token=${token}`
+      const response = await axios.put(url, formData)
+      setFormData({
+        title:'',
+        content:'',
+        username: currentUser.name,
+        tags:[]
+      })
+      if(response.status !== 201){
+        console.error('Something when wrong with post editting');
+        console.log(response.statusText);
+      }
     }
   }
 
+  useEffect(()=>{
+    console.log(`id:${id}`);
+    (async function checkForExistingPost(){
+      if(id){
+        const response = await axios.get(`/post/${id}`);
+        const post = await response.data.post;
+        setFormData({
+          title: post.title,
+          content: post.content,
+          username: currentUser.name,
+          tags: post.tags
+        })
+      }
+    })()
+  },[])
+
   return (
     <div className="page">
-      <h1>New Post</h1>
-      <form className="newPostForm" onSubmit={handleCreatePost}>
+      <h1>{id?'Edit':'New'} Post</h1>
+      <form className="newPostForm" onSubmit={handleSubmitPost}>
           <h3>@{formData.username}</h3>
           <input type="text" className="titleField" name="title" placeholder="Post Title" value={formData.title} onChange={handleFormChange}/>
           <textarea className="contentField" name="content" placeholder="Type something..." value={formData.content} onChange={handleFormChange}/>

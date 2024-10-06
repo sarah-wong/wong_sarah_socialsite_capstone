@@ -44,8 +44,10 @@ async function commentOnPost(req, res){
         }
     })
 
+    const updatedPost = await Post.findById(postId)
+
     // HTTP 201 Created
-    res.status(201).json({comment:comment})
+    res.status(201).json({post:updatedPost})
 }
 
 // READ
@@ -80,10 +82,10 @@ async function fetchPosts(req, res){
 async function editPost(req, res){
     const id = req.params.id
     const {title, content, username, tags} = req.body
-    const post = Post.findById(id);
+    const post = await Post.findById(id);
 
     // Cannot edit other User's Posts
-    if(post.meta.userId === req.user._id){
+    if(String(post.meta.userId) === String(req.user._id)){
         await Post.findByIdAndUpdate(id, {
             title: title,
             content: content,
@@ -96,6 +98,9 @@ async function editPost(req, res){
     }
     else{
         // HTTP 403 Forbidden
+        console.log('ID Mismatch!');
+        console.log(`poster's uid: ${post.meta.userId}`);
+        console.log(`attempted access: ${req.user._id}`);
         res.status(403).json('Access Denied')
     }
 }
@@ -105,16 +110,22 @@ async function voteOnPost(req, res){
     const userId = req.user._id
     const {vote} = req.body
 
-    const newVotes = await Post.findById(postId).votes
-    newVotes.set(userId, vote)
+    const post = await Post.findById(postId)
+    post.meta.votes.set(userId, vote)
     
     await Post.findByIdAndUpdate(postId, {
-        votes: newVotes
+        meta:{
+            ...post.meta,
+            votes: post.meta.votes
+        }
     })
 
-    const post = await Post.findById(postId)
+    const updatedPost = await Post.findById(postId)
     // HTTP 200 Success
-    res.status(200).json({post:post})
+    res.status(200).json({post:updatedPost})
+
+    // const actionName = vote===1?'liked':vote===-1?'disliked':'no-voted'
+    // console.log(`[${req.user.access}] ${req.user.name} ${actionName} a post by ${updatedPost.username}`);
 }
 
 // DELETE

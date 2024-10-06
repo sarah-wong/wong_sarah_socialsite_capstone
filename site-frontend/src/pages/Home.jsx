@@ -7,7 +7,7 @@ function Home() {
 
   useEffect(()=>{
     async function getPostFeed(){
-      const response = await axios.get('http://localhost:7777/post')
+      const response = await axios.get('/post')
       if(response.status !== 200){
         console.error('Error retrieving posts');
         console.log(response.statusText);
@@ -18,11 +18,9 @@ function Home() {
     getPostFeed()
   },[])
 
-  function commentOnPost(comment, idx){
+  function setPost(idx, post){
     setFeed((feed)=>{
-      const targetPost = feed[idx]
-      targetPost.meta.comments = [...postComments, comment]
-      feed.splice(idx, 1, targetPost)
+      feed.splice(idx, 1, post)
       return feed
     })
   }
@@ -32,7 +30,7 @@ function Home() {
       <h1>Home</h1>
       <div className="feed">
         {feed.map((post, idx)=>(
-          <Post post={post} idx={idx} commentOnPost={commentOnPost}/>
+          <Post key={post._id} post={post} setPost={(post)=>setPost(idx, post)}/>
           ))}
       </div>
     </div>

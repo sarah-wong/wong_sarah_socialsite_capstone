@@ -117,9 +117,13 @@ form input{
   border-radius:16px;
   width:500px;
   padding:0px 1rem 8px;
+  transition: height 0.25s;
 }
 .postHeader{
   text-align:left;
+}
+.userInfoBox{
+  padding:8px 1rem;
 }
 .flexbox{
   display:flex;
@@ -135,9 +139,10 @@ form input{
 .lefty{
   margin-right: auto;
 }
-.userInfoBox{
-  border-bottom:1px solid lightgrey;
-  padding:8px 1rem;
+.postContent{
+  border-top:1px solid white;
+  border-bottom:1px solid white;
+  padding:0px 1rem 1rem;
 }
 .commentContainer{
   display:flex;
@@ -146,4 +151,65 @@ form input{
 }
 .comment{
   border:1px solid lightgrey;
+}
+
+.compoundBtn{
+  margin:0.5rem auto;
+  padding:0px;
+  background-color:transparent;
+  display:flex;
+  align-items:center;
+}
+.compoundBtn:hover{
+  border-color:transparent;
+  text-decoration:underline;
+}
+
+.iconBtn{
+  display:inline-block;
+  width:1rem;
+  height:1rem;
+  background-color: currentColor;
+  mask-repeat:no-repeat;
+  mask-size: 100% 100%;
+  transition: background-color 0.25s;
+}
+
+.like{
+  mask-image: url('https://api.iconify.design/mdi/thumb-up-outline.svg')
+}
+.likeSelect{
+  background-color:lightgreen;
+  mask-image: url('https://api.iconify.design/mdi/thumb-up.svg')
+}
+
+.dislike{
+  mask-image: url('https://api.iconify.design/mdi/thumb-down-outline.svg')
+}
+.dislikeSelect{
+  background-color:crimson;
+  mask-image: url('https://api.iconify.design/mdi/thumb-down.svg')
+}
+
+.menu-right{
+  mask-image: url('https://api.iconify.design/mdi/menu-right.svg')
+}
+.menu-down{
+  mask-image: url('https://api.iconify.design/mdi/menu-down.svg')
+}
+
+.edit{
+  mask-image: url('https://api.iconify.design/mdi/pencil.svg')
+}
+
+.close{
+  mask-image: url('https://api.iconify.design/mdi/close.svg')
+}
+
+.delete{
+  mask-image: url('https://api.iconify.design/mdi/trash-can-outline.svg')
+}
+
+.close:hover, .delete:hover{
+  background-color:crimson;
 }

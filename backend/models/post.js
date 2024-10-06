@@ -25,7 +25,8 @@ const postSchema = new mongoose.Schema({
             type: [Comment.schema]
         },
         votes: {
-            type: mongoose.SchemaTypes.Map,
+            type: Map,
+            of: Number
         }
     }
 },{
