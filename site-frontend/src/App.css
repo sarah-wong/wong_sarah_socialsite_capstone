@@ -143,6 +143,11 @@ form input{
 .lefty{
   margin-right: auto;
 }
+.topRightBtns{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+}
 .postContent{
   border-top:1px solid white;
   border-bottom:1px solid white;
@@ -178,7 +183,6 @@ form input{
   mask-size: 100% 100%;
   transition: background-color 0.25s;
 }
-
 .like{
   mask-image: url('https://api.iconify.design/mdi/thumb-up-outline.svg')
 }
@@ -214,9 +218,15 @@ form input{
   mask-image: url('https://api.iconify.design/mdi/trash-can-outline.svg')
 }
 
-.close:hover, .delete:hover{
+.moderate{
+  mask-image: url('https://api.iconify.design/mdi/gavel.svg')
+}
+
+.close:hover, .delete:hover, .moderate:hover{
   background-color:crimson;
 }
+
+
 
 .profileHeader{
   border-bottom:1px solid grey;
@@ -248,4 +258,26 @@ form input{
 .pageHeader{
   justify-content:center;
   align-items:center;
+}
+.dialog{
+  border:1px dotted white;
+  border-radius:8px;
+  padding:0px 1rem;
+}
+
+.dialogHeader, .dialogBody{
+  border-bottom:1px solid white;
+}
+
+.dialogBtnContainer{
+  padding:1rem;
+}
+
+.confirmDelBtn{
+  background-color:crimson;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+.confirmDelBtn:hover{
+  border-color:white;
 }

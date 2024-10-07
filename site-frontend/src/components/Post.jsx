@@ -2,8 +2,9 @@ import { useState, useEffect, useContext } from 'react'
 import { CurrentUserContext } from '../App'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import DeleteConfirm from './DeleteConfirm'
 
-function Post({post, setPost}) {
+function Post({post, setPost, deletePost}) {
 
   const currentUser = useContext(CurrentUserContext)
   const token = localStorage.getItem('userAuthToken')
@@ -13,6 +14,8 @@ function Post({post, setPost}) {
   })
   const [displayComments, setDisplayComments] = useState(false)
   const navigate = useNavigate()
+
+  const [showDelete, setShowDelete] = useState(false)
 
   function handleCommentFormChange(evt){
     setCommentFormData({
@@ -45,6 +48,13 @@ function Post({post, setPost}) {
       vote:value
     })
     setVote(value)
+  }
+
+  async function handleDeletePost(){
+    const url = `/post/${post._id}?token=${token}`
+    await axios.delete(url)
+    setShowDelete(false)
+    deletePost()
   }
   
   function handleDisplayToggle(evt){
@@ -83,68 +93,83 @@ function Post({post, setPost}) {
         <i className="date">
           {formatDate(post.createdAt)}
         </i>
+        <div className="topRightBtns">
         {currentUser._id === post.meta.userId&&
           <button className="iconBtn edit" alt="edit" onClick={goToEditForm}>
+          </button>}
+        {(currentUser._id === post.meta.userId||currentUser.access === 'ADMIN')&&
+          <button className="iconBtn delete" alt="delete" onClick={()=>setShowDelete(true)}>
+
+          </button>
+        }
+        </div>
+      </div>
+
+      {showDelete?<DeleteConfirm
+        targetName={post.title}
+        handleClose={()=>setShowDelete(false)}
+        handleDelete={handleDeletePost}
+      />:
+
+      <div className="postBody">
+        <div className="postContent">
+        <h3 className='postHeader'>{post.title}</h3>
+          <p>{post.content}</p>
+          <div className="tagContainer">
+              {post.tags.map((tag)=>(
+              <span className="tag" key={tag}>
+                  #{tag}
+              </span>
+              ))}
+          </div>
+        </div>
+          <div className="voteBtnContainer">
+            <button className={"iconBtn " + (vote===1?"likeSelect":"like")}
+            value={1} onClick={handleVote}>
+
             </button>
-            }
-      </div>
-      <div className="postContent">
-      <h3 className='postHeader'>{post.title}</h3>
-        <p>{post.content}</p>
-        <div className="tagContainer">
-            {post.tags.map((tag)=>(
-            <span className="tag" key={tag}>
-                #{tag}
-            </span>
-            ))}
-        </div>
-      </div>
-        <div className="voteBtnContainer">
-          <button className={"iconBtn " + (vote===1?"likeSelect":"like")}
-          value={1} onClick={handleVote}>
+            <button className={"iconBtn " + (vote===-1?"dislikeSelect":"dislike")}
+            value={-1} onClick={handleVote}>
 
-          </button>
-          <button className={"iconBtn " + (vote===-1?"dislikeSelect":"dislike")}
-          value={-1} onClick={handleVote}>
-
-          </button>
-        </div>
-        <form className="commentForm" onSubmit={handleSubmitComment}>
-            <input type="text" name="comment" onChange={handleCommentFormChange}/>
-            <input type="submit" value="Comment" />
-        </form>
-        <button className='compoundBtn' onClick={handleDisplayToggle}>
-          {displayComments?
-            <img alt="V" className="iconBtn menu-down" />:
-            <img alt="->" className="iconBtn menu-right" />
-          }
-          <span>
+            </button>
+          </div>
+          <form className="commentForm" onSubmit={handleSubmitComment}>
+              <input type="text" name="comment" onChange={handleCommentFormChange}/>
+              <input type="submit" value="Comment" />
+          </form>
+          <button className='compoundBtn' onClick={handleDisplayToggle}>
             {displayComments?
-            'Hide Comments':
-            `Show Comments (${post.meta.comments.length})`
+              <img alt="V" className="iconBtn menu-down" />:
+              <img alt="->" className="iconBtn menu-right" />
             }
-          </span>
-        </button>
-        {displayComments&&<div className="commentContainer">
-          {post.meta.comments.length?
-            post.meta.comments.map(({text, username, createdAt})=>
-                 (<div className="comment">
-                  <div className="flexbox userInfoBox">
-                    <img src="/vite.svg" alt={username} className="pfp" />
-                    <b className='lefty'>@{username}</b>
-                    <i className="date">
-                      {formatDate(createdAt)}
-                    </i>
-                    {currentUser._id === post.meta.userId&&
-                      <button className="iconBtn edit" alt="edit"></button>
-                        }
+            <span>
+              {displayComments?
+              'Hide Comments':
+              `Show Comments (${post.meta.comments.length})`
+              }
+            </span>
+          </button>
+          {displayComments&&<div className="commentContainer">
+            {post.meta.comments.length?
+              post.meta.comments.map(({text, username, createdAt})=>
+                  (<div className="comment">
+                    <div className="flexbox userInfoBox">
+                      <img src="/vite.svg" alt={username} className="pfp" />
+                      <b className='lefty'>@{username}</b>
+                      <i className="date">
+                        {formatDate(createdAt)}
+                      </i>
+                      {currentUser._id === post.meta.userId&&
+                        <button className="iconBtn edit" alt="edit"></button>
+                          }
+                    </div>
+                    <p>{text}</p>
                   </div>
-                  <p>{text}</p>
-                </div>
-                )):
-            <i>no comments yet...</i>
-          }
-        </div>}
+                  )):
+              <i>no comments yet...</i>
+            }
+          </div>}
+      </div>}
     </div>
   )
 }

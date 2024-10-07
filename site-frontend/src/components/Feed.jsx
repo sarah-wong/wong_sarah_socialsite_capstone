@@ -33,6 +33,12 @@ function Feed({filter}) {
         return feed
       })
     }
+    function deletePost(idx){
+        const start = feed.slice(0, idx)
+        const end = feed.slice(idx+1)
+        setFeed([...start, ...end])
+        // splice didn't work here to just remove??
+    }
 
   return (
     <div className="feed">
@@ -40,7 +46,8 @@ function Feed({filter}) {
           <Post
           key={post._id}
           post={post}
-          setPost={(post)=>setPost(idx, post)}/>
+          setPost={(post)=>setPost(idx, post)}
+          deletePost={()=>deletePost(idx)}/>
           ))}
       </div>
   )

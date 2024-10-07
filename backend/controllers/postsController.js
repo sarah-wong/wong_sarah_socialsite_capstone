@@ -153,8 +153,8 @@ async function voteOnPost(req, res){
 
 async function deletePost(req, res){
     const id = req.params.id
-    const post = Post.findById(id);
-
+    const post = await Post.findById(id);
+    
     // Cannot delete other User's Posts UNLESS you're an ADMIN
     if(post.meta.userId === req.user._id || req.user.access == 'ADMIN'){
         await Post.findByIdAndDelete(id)
