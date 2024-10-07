@@ -88,8 +88,11 @@ function Post({post, setPost, deletePost}) {
   return (
     <div className="post">
       <div className="flexbox userInfoBox">
-        <img src="/vite.svg" alt={post.username} className="pfp" />
-        <b className='lefty'>@{post.username}</b>
+        <img src="/vite.svg" alt={post.username} className="pfp"
+        onClick={()=>navigate(`/profile/${post.username}`)}/>
+        <b className='lefty profileLink' onClick={()=>navigate(`/profile/${post.username}`)}>
+          @{post.username}
+          </b>
         <i className="date">
           {formatDate(post.createdAt)}
         </i>
