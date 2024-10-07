@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Profile = require('../models/profile')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
@@ -27,15 +28,29 @@ async function createUser(req, res){
             email:email,
             password:result
         })
+
+        // every user gets a profile
+        await Profile.create({
+            username:name,
+            displayName:name,
+            status:'',
+            bio:'',
+            meta:{
+                userId: user._id,
+                followers:[],
+                following:[]
+            }
+        })
+
         // 201 Created
         res.status(201).json(createJWT(user))
-        console.log('signup success!');
+        // console.log('signup success!');
     })
 }
 
 async function login(req, res){
     const {email, password} = req.body
-    console.log(`login attempt: ${email}`);
+    // console.log(`login attempt: ${email}`);
     const user = await User.findOne({email: email})
     if (!user) {
         // 400 Bad Request
