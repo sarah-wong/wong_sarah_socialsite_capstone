@@ -6,6 +6,7 @@ const connectToDb = require('./config/connectToDb')
 const validateToken = require('./config/validateToken')
 const userRouter = require('./routes/userRouter')
 const postRouter = require('./routes/postRouter')
+const profileRouter = require('./routes/profileRouter')
 
 const app = express()
 const PORT = process.env.PORT || '3000'
@@ -21,6 +22,7 @@ app.use(cors())
 // ROUTES
 app.use('/user', userRouter)
 app.use('/post', postRouter)
+app.use('/profile', profileRouter)
 
 app.use((err, req, res, next)=>{
     console.error(err);

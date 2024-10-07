@@ -245,3 +245,7 @@ form input{
   justify-content:space-evenly;
   margin:2.5rem;
 }
+.pageHeader{
+  justify-content:center;
+  align-items:center;
+}
