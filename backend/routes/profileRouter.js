@@ -10,3 +10,5 @@ router.get('/:username', profilesController.fetchProfile)
 // updating requires login
 router.use(ensureLoggedIn)
 router.put('/', profilesController.updateProfile)
+
+module.exports = router
