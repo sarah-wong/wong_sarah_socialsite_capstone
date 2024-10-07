@@ -130,7 +130,7 @@ function Post({post, setPost}) {
             post.meta.comments.map(({text, username, createdAt})=>
                  (<div className="comment">
                   <div className="flexbox userInfoBox">
-                    <img src="vite.svg" alt={username} className="pfp" />
+                    <img src="/vite.svg" alt={username} className="pfp" />
                     <b className='lefty'>@{username}</b>
                     <i className="date">
                       {formatDate(createdAt)}
