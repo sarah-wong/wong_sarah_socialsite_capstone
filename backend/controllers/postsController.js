@@ -60,7 +60,7 @@ async function fetchPost(req, res){
 }
 
 async function fetchPosts(req, res){    
-    // accepted filters are: [title, user, tags, before, after, limit
+    // accepted filters are: [title, user, tags, before, after, limit]
 
     const query = req.query
     const filter = {}

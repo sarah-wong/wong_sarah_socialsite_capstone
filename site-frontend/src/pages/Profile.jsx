@@ -1,35 +1,11 @@
-import {useState, useEffect, useContext} from 'react'
-import {CurrentUserContext} from '../App'
-import Post from '../components/Post'
-import axios from 'axios'
+import Feed from '../components/Feed'
+import {useParams} from 'react-router-dom'
 
 function Profile() {
-  const currentUser = useContext(CurrentUserContext)
-  const [feed, setFeed] = useState([])
-
-  useEffect(()=>{
-    (async function getProfilefeed(){
-      const username = String(currentUser.name)
-      //username MUST to be typecast or console-logged to work. for some reason
-      const url = `/post?user=${username}`
-      const response = await axios.get(url)
-      const data = await response.data
-      setFeed(data.posts)
-      console.log(`feed: ${feed}`);
-    })()
-    
-  },[])
-
-  function setPost(idx, post){
-    setFeed((feed)=>{
-      feed.splice(idx, 1, post)
-      return feed
-    })
-  }
-
+  const {username} = useParams()
   return (
     <div className="page">
-      <h2>@{currentUser.name}</h2>
+      <h2>@{String(username)}</h2>
       <div className="flexbox profileHeader">
         <img src="/vite.svg" alt="" className="profileImage" />
         <div className="cloutCounter">
@@ -51,12 +27,7 @@ function Profile() {
         <button>Message</button>
         <button>Contact</button>
       </div>
-      {feed?<div className="feed">
-        {feed.map((post, idx)=>(
-          <Post key={post._id} post={post} setPost={(post)=>setPost(idx, post)}/>
-          ))}
-      </div>:
-      <i>@{currentUser.name} hasn't posted anything yet...</i>}
+      <Feed filter={{username:username}}/>
     </div>
   )
 }

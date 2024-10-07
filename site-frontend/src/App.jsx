@@ -74,7 +74,7 @@ function App() {
           }/>
           <Route path='/post/new' element={<PostForm/>}/>
           <Route path='/post/:id/edit' element={<PostForm/>}/>
-          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/profile/:username' element={<Profile/>}/>
         </Routes>
       </div>
     </CurrentUserContext.Provider>
