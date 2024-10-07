@@ -64,31 +64,27 @@ async function fetchPosts(req, res){
 
     const query = req.query
     const filter = {}
-    const count= Number.POSITIVE_INFINITY
+    const count = Number.POSITIVE_INFINITY
     
     if(query.title){
         filter.title = query.title
-
-        console.log(`title: ${filter.title}`);
+        // console.log(`title: ${filter.title}`);
     }
     if(req.query.user){
         filter.username= query.user
-
-        console.log(`username: ${filter.username}`);
+        // console.log(`username: ${filter.username}`);
     }
     if(req.query.tags){
         const tagList = query.tags.split(',')
         filter.tags = tagList
-
-        console.log(`tags: ${filter.tags}`);
+        // console.log(`tags: ${filter.tags}`);
     }
     if(query.before || query.after){
         const start = new Date(req.query.after || 0)
         const end = new Date(req.query.before || Date.now())
         filter.createdAt = {$gte: start, $lte: end}
-
-        console.log(`post date in range:
-            ${start.toDateString()}-${end.toDateString()} (inclusive)`);
+        // console.log(`post date in range:
+        //     ${start.toDateString()}-${end.toDateString()} (inclusive)`);
     }
     if(req.query.limit){
         count = Number(req.query.limit)

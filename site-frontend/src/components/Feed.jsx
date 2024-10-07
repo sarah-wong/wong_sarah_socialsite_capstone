@@ -10,12 +10,12 @@ function Feed({filter}) {
         let url = '/post'
         if(filter){
             url += '?'
-            url += filter.title?`title=${filter.title}`:''
-            url += filter.user?`title=${filter.user}`:''
-            url += filter.tags?`tags=${filter.tags}`:''
-            url += filter.after?`after=${filter.after}`:''
-            url += filter.before?`before=${filter.before}`:''
-            url += filter.limit?`limit=${filter.limit}`:''
+            url += filter.title?`title=${String(filter.title)}`:''
+            url += filter.user?`user=${String(filter.user)}`:''
+            url += filter.tags?`tags=${String(filter.tags)}`:''
+            url += filter.after?`after=${String(filter.after)}`:''
+            url += filter.before?`before=${String(filter.before)}`:''
+            url += filter.limit?`limit=${String(filter.limit)}`:''
         }
         const response = await axios.get(url)
         if(response.status !== 200){

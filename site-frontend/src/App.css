@@ -219,8 +219,11 @@ form input{
 }
 
 .profileHeader{
-  padding:1rem;
-  justify-content:space-around;
+  border-bottom:1px solid grey;
+  padding:0px 10%;
+}
+.profileInfo{
+  justify-content:space-between;
 }
 .profileImage{
   border:solid white;
@@ -228,8 +231,7 @@ form input{
   border-radius:100%;
   height:128px;
 }
-
-.profileUsername{
+.profileName{
   text-align:left;
 }
 .aboutMe{
@@ -238,6 +240,9 @@ form input{
 .followBtn{
   font-weight:bold;
   background: linear-gradient(plum 0%, pink 100%)
+}
+.counterLabel{
+  font-weight:bold;
 }
 .buttonTray{
   justify-content:space-evenly;

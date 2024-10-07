@@ -78,7 +78,7 @@ function Post({post, setPost}) {
   return (
     <div className="post">
       <div className="flexbox userInfoBox">
-        <img src="vite.svg" alt={post.username} className="pfp" />
+        <img src="/vite.svg" alt={post.username} className="pfp" />
         <b className='lefty'>@{post.username}</b>
         <i className="date">
           {formatDate(post.createdAt)}
@@ -129,20 +129,19 @@ function Post({post, setPost}) {
           {post.meta.comments.length?
             post.meta.comments.map(({text, username, createdAt})=>
                  (<div className="comment">
-                            <div className="flexbox userInfoBox">
-                              <img src="vite.svg" alt={username} className="pfp" />
-                              <b className='lefty'>@{username}</b>
-                              <i className="date">
-                                {formatDate(createdAt)}
-                              </i>
-                              {currentUser._id === post.meta.userId&&
-                                <button className="iconBtn edit" alt="edit"></button>
-                                  }
-                            </div>
-                            <p>{text}</p>
-                          </div>
-                          )
-              ):
+                  <div className="flexbox userInfoBox">
+                    <img src="vite.svg" alt={username} className="pfp" />
+                    <b className='lefty'>@{username}</b>
+                    <i className="date">
+                      {formatDate(createdAt)}
+                    </i>
+                    {currentUser._id === post.meta.userId&&
+                      <button className="iconBtn edit" alt="edit"></button>
+                        }
+                  </div>
+                  <p>{text}</p>
+                </div>
+                )):
             <i>no comments yet...</i>
           }
         </div>}
