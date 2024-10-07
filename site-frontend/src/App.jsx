@@ -1,5 +1,5 @@
 import {useState, useEffect, createContext} from 'react'
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import './App.css'
 
@@ -20,6 +20,7 @@ function App() {
     email:'',
     access:''
   })
+  const navigate = useNavigate()
 
   axios.defaults.baseURL = 'http://localhost:7777'
 
@@ -50,6 +51,7 @@ function App() {
         email:'',
         access:''
       })
+      navigate('/')
     }
   },[loggedIn])
 
@@ -59,7 +61,7 @@ function App() {
         {loggedIn&&
           <div className="userDisplay">
             <div className="welcomeMsg">
-              Welcome <b>{currentUser.access!=='USER'&&`[${currentUser.access}]`}</b> {currentUser.name} <i>({currentUser.email}) </i>
+              Logged in as: <b>{currentUser.access!=='USER'&&`[${currentUser.access}]`}</b> @{currentUser.name}
             </div>
             <button onClick={()=>setLoggedIn(false)}>
               Log Out

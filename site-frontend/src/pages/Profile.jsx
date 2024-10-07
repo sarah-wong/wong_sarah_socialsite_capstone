@@ -18,7 +18,7 @@ function Profile() {
       const followerCount = profile.meta.followerProfiles.length
       const followingCount = profile.meta.followingProfiles.length
 
-      const userPosts = await axios.get(`/post?username=${String(username)}`)
+      const userPosts = await axios.get(`/post?user=${String(username)}`)
       const postCount = await userPosts.data.posts.length
 
       profile.posts = postCount
