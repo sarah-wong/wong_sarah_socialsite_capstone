@@ -1,5 +1,6 @@
 const Post = require('../models/post')
 const Comment = require('../models/comment')
+const mongoose = require('mongoose')
 
 
 // CREATE
@@ -58,21 +59,45 @@ async function fetchPost(req, res){
     res.status(200).json({post:post})
 }
 
-async function fetchPosts(req, res){
+async function fetchPosts(req, res){    
+    // accepted filters are: [title, user, tags, before, after, limit
+
+    const query = req.query
     const filter = {}
-    // accepted filters are: title, user, tags
-    if(req.query.title){
-        filter.title = req.query.title
+    const count= Number.POSITIVE_INFINITY
+    
+    if(query.title){
+        filter.title = query.title
+
+        console.log(`title: ${filter.title}`);
     }
     if(req.query.user){
-        filter.meta.userId = req.query.user
+        filter.username= query.user
+
+        console.log(`username: ${filter.username}`);
     }
     if(req.query.tags){
-        const tagList = req.query.tags.split(',')
+        const tagList = query.tags.split(',')
         filter.tags = tagList
-    }
 
-    const posts = await Post.find(filter)
+        console.log(`tags: ${filter.tags}`);
+    }
+    if(query.before || query.after){
+        const start = new Date(req.query.after || 0)
+        const end = new Date(req.query.before || Date.now())
+        filter.createdAt = {$gte: start, $lte: end}
+
+        console.log(`post date in range:
+            ${start.toDateString()}-${end.toDateString()} (inclusive)`);
+    }
+    if(req.query.limit){
+        count = Number(req.query.limit)
+    }
+    
+
+    const posts = await Post.find(filter).limit(count)
+
+    
     // 200 Success
     res.status(200).json({posts:posts})
 }

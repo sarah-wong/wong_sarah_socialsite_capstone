@@ -26,7 +26,7 @@ function App() {
   // Retrieve user data from authToken
   useEffect(()=>{
     if(loggedIn){
-      console.log('login effect triggered');
+      // console.log('login effect triggered');
       async function getLoggedinUser(){
         const token = localStorage.getItem('userAuthToken')
         const url = `/user?token=${token}`
@@ -43,7 +43,7 @@ function App() {
       getLoggedinUser()
     }
     else{
-      console.log('logging out');
+      // console.log('logging out');
       localStorage.removeItem('userAuthToken')
       setCurrentUser({
         name:'',
@@ -52,10 +52,6 @@ function App() {
       })
     }
   },[loggedIn])
-
-  function getPost(id){
-
-  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
