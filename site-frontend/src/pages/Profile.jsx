@@ -16,16 +16,9 @@ function Profile() {
       const url = `/profile/${username}`
       const response = await axios.get(url)
       const profile = await response.data.profile;
-      const followerCount = profile.meta.followerProfiles.length
-      const followingCount = profile.meta.followingProfiles.length
 
       const userPosts = await axios.get(`/post?user=${String(username)}`)
-      const postCount = await userPosts.data.posts.length
-
-      profile.posts = postCount
-      profile.followers = followerCount
-      profile.following = followingCount
-      
+      profile.postCount = await userPosts.data.posts.length
 
       setProfileData(profile)
     })()
@@ -48,7 +41,10 @@ function Profile() {
       bio:profileData.bio
     })
     const updatedData = await response.data.profile
-    setProfileData(updatedData)
+    setProfileData({
+      ...profileData,
+      ...updatedData
+    })
     setShowForm(false)
   }
 
@@ -63,23 +59,23 @@ function Profile() {
       {!showForm?<div className="profileHeader">
         <section className="flexbox profileStats">
           <img src="/vite.svg" alt="" className="profileImage" />
-          <div className="cloutCounters">
-            <p>{profileData.posts}</p>
+          <div className="cloutCounter">
+            <p>{profileData.postCount}</p>
             <p className='counterLabel'>Posts</p>
           </div>
           <div className="cloutCounter">
-            <p>{profileData.followers}</p>
+            <p>{profileData.meta.followerProfiles.length}</p>
             <p className='counterLabel'>Followers</p>
           </div>
           <div className="cloutCounter">
-            <p>{profileData.following}</p>
+            <p>{profileData.meta.followingProfiles.length}</p>
             <p className='counterLabel'>Following</p>
           </div>
         </section>
         <section className="profileInfo">
           <h3 className='profileName'>{profileData.displayName}</h3>
-          <i className="status"><b>Status:</b> {profileData.status}</i>
-          <p className="bio">{profileData.bio}</p>
+          <i className="status"><b>Status:</b> {profileData.status||'no status yet...'}</i>
+          <p className="bio">{profileData.bio||'no bio yet...'}</p>
         </section>
         <div className="flexbox buttonTray">
           <button className="followBtn">Follow</button>
