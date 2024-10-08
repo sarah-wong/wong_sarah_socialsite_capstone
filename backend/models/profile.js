@@ -21,13 +21,11 @@ const profileSchema = new mongoose.Schema({
             required:true,
             unique:true
         },
-        followerProfiles: {
+        followers: {
             type: [mongoose.SchemaTypes.ObjectId],
-            alias: 'followers'
         },
-        followingProfiles: {
+        following: {
             type: [mongoose.SchemaTypes.ObjectId],
-            alias: 'following'
         }
     }
 })

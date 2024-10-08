@@ -24,6 +24,23 @@ function Profile() {
     })()
   },[])
 
+  async function handleFollow(evt){
+      evt.preventDefault()
+      const follow = isFollowing()
+      const token = localStorage.getItem('userAuthToken')
+      const url = `/profile/${username}/follow?token=${token}`
+      const response = await axios.put(url, {follow:!follow})
+      const profile = await response.data.profile
+
+      const userPosts = await axios.get(`/post?user=${String(username)}`)
+      profile.postCount = await userPosts.data.posts.length
+
+      setProfileData(profile)
+  }
+  function isFollowing(){
+    return profileData.meta.followers.includes(currentUser._id)
+  }
+
   function handleChange(evt){
     evt.preventDefault()
     setProfileData({
@@ -64,11 +81,11 @@ function Profile() {
             <p className='counterLabel'>Posts</p>
           </div>
           <div className="cloutCounter">
-            <p>{profileData.meta.followerProfiles.length}</p>
+            <p>{profileData.meta.followers.length}</p>
             <p className='counterLabel'>Followers</p>
           </div>
           <div className="cloutCounter">
-            <p>{profileData.meta.followingProfiles.length}</p>
+            <p>{profileData.meta.following.length}</p>
             <p className='counterLabel'>Following</p>
           </div>
         </section>
@@ -78,7 +95,12 @@ function Profile() {
           <p className="bio">{profileData.bio||'no bio yet...'}</p>
         </section>
         <div className="flexbox buttonTray">
-          <button className="followBtn">Follow</button>
+          {!isFollowing()&&<button className="followBtn" onClick={handleFollow}>
+            Follow
+          </button>}
+          {isFollowing()&&<button className="unfollowBtn" onClick={handleFollow}>
+            Unfollow
+          </button>}
           <button>Message</button>
           <button>Contact</button>
           {currentUser.name===username&&

@@ -255,6 +255,13 @@ form input{
   font-weight:bold;
   background: linear-gradient(plum 0%, pink 100%)
 }
+.unfollowBtn{
+  font-weight:bold;
+  border-color:white;
+}
+.unfollowBtn:hover{
+  border-color:crimson;
+}
 .counterLabel{
   font-weight:bold;
 }
