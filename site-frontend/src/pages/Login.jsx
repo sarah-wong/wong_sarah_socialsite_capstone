@@ -7,9 +7,9 @@ import {Navigate} from 'react-router-dom'
 function Login({loggedIn, setLoggedIn}) {
   const [loginData, setLoginData] = useState({
     email:'',
-    password:'',
-    remember:false
+    password:''
   })
+  const [showPassword, setShowPassword] = useState(false)
 
   const [signupData, setSignupData] = useState({
     name:'',
@@ -105,14 +105,14 @@ function Login({loggedIn, setLoggedIn}) {
           <input type="email" name="email" placeholder='email' required
           value={loginData.email}
           onChange={handleLoginFieldChange}/>
-          <input type="password" name="password" placeholder='password' required
+          <input type={showPassword?'text':"password"} name="password" placeholder='password' required
           value={loginData.password}
           onChange={handleLoginFieldChange}/>
           <div className="optionBox">
             <input type="checkbox" name="remember"
-            checked={loginData.remember}
-            onChange={handleLoginCheckbox}/>
-            <label htmlFor="remember"> remember me</label>
+            checked={showPassword}
+            onChange={()=>setShowPassword(!showPassword)}/>
+            <label htmlFor="remember"> show password</label>
           </div>
           <br />
           <button type="submit">Login</button>
