@@ -8,7 +8,7 @@ function Navbar({loggedIn}) {
   return (
     <nav className="navbar">
         <Link className="navtab" to='/'>Home</Link>
-        {!loggedIn&&<Link className="navtab" to='/login'>Login/Register</Link>}
+        {!loggedIn&&<Link className="navtab" to='/login'>Sign Up/Login</Link>}
         {loggedIn&&<Link className="navtab" to='/post/new'>New Post</Link>}
         {loggedIn&&<Link className="navtab" to={myProfile}>My Profile</Link>}
     </nav>
