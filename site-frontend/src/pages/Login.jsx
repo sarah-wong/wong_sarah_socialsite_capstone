@@ -112,7 +112,7 @@ function Login({loggedIn, setLoggedIn}) {
             <input type="checkbox" name="remember"
             checked={showPassword}
             onChange={()=>setShowPassword(!showPassword)}/>
-            <label htmlFor="remember"> show password</label>
+            <label htmlFor="remember"> {showPassword?'hide':'show'} password</label>
           </div>
           <br />
           <button type="submit">Login</button>
