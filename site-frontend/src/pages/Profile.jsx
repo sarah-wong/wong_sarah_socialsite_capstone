@@ -9,6 +9,7 @@ function Profile() {
   const {username} = useParams()
   // console.log(`profile of: ${username}`);
   const [profileData, setProfileData] = useState(null)
+  const [showForm, setShowForm] = useState(false)
 
   useEffect(()=>{
     (async function getProfileData(){
@@ -30,6 +31,14 @@ function Profile() {
     })()
   },[])
 
+  function handleChange(evt){
+    evt.preventDefault()
+    setProfileData({
+      ...profileData,
+      [evt.target.name]:evt.target.value
+    })
+  }
+
   function loading(){
     return <i>Loading...</i>
   }
@@ -37,12 +46,8 @@ function Profile() {
   function loaded(){
     return (
       <div className="page">
-        <div className="flexbox pageHeader">
-          <h2>@{String(username)}</h2>
-          {(currentUser._id===profileData.meta.userId)&&
-            <button className="iconBtn edit"></button>}
-        </div>
-      <div className="profileHeader">
+      <h2>@{String(username)}</h2>
+      {!showForm?<div className="profileHeader">
         <section className="flexbox profileStats">
           <img src="/vite.svg" alt="" className="profileImage" />
           <div className="cloutCounters">
@@ -67,8 +72,21 @@ function Profile() {
           <button className="followBtn">Follow</button>
           <button>Message</button>
           <button>Contact</button>
+          {currentUser.name===username&&
+          <button className="iconBtn edit" onClick={()=>setShowForm(true)}></button>}
         </div>
-      </div>
+      </div>:
+      <form className="profileForm">
+        <input type="text" name='displayName' value={profileData.displayName} onChange={handleChange}/>
+        <input type="text" name='status' value={profileData.status}  onChange={handleChange} placeholder='status...'/>
+        <textarea name="bio" value={profileData.bio} onChange={handleChange} placeholder='bio...'>
+        </textarea>
+        <div className="buttonTray">
+          <button type="submit">Save Changes</button>
+          <button>Cancel</button>
+        </div>
+      </form>
+      }
       <Feed filter={{user:username}}/>
     </div>
     )
