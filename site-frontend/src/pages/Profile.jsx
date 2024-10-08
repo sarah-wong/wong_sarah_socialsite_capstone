@@ -38,6 +38,19 @@ function Profile() {
       [evt.target.name]:evt.target.value
     })
   }
+  async function handleUpdateProfile(evt){
+    evt.preventDefault()
+    const token = localStorage.getItem('userAuthToken')
+    const url = `/profile?token=${token}`
+    const response = await axios.put(url, {
+      displayName:profileData.displayName,
+      status:profileData.status,
+      bio:profileData.bio
+    })
+    const updatedData = await response.data.profile
+    setProfileData(updatedData)
+    setShowForm(false)
+  }
 
   function loading(){
     return <i>Loading...</i>
@@ -76,14 +89,16 @@ function Profile() {
           <button className="iconBtn edit" onClick={()=>setShowForm(true)}></button>}
         </div>
       </div>:
-      <form className="profileForm">
+      <form className="profileForm" onSubmit={handleUpdateProfile}>
         <input type="text" name='displayName' value={profileData.displayName} onChange={handleChange}/>
         <input type="text" name='status' value={profileData.status}  onChange={handleChange} placeholder='status...'/>
         <textarea name="bio" value={profileData.bio} onChange={handleChange} placeholder='bio...'>
         </textarea>
         <div className="buttonTray">
           <button type="submit">Save Changes</button>
-          <button>Cancel</button>
+          <button onClick={()=>setShowForm(false)}>
+            Cancel
+          </button>
         </div>
       </form>
       }
