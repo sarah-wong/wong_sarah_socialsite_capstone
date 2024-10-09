@@ -31,8 +31,11 @@ function Post({post, setPost, deletePost}) {
     const response = await axios.post(url, {
       text: commentFormData.comment
     })
-    setPost(response.post)
-    
+    setPost(response.data.post)
+    setCommentFormData({
+      comment:''
+    })
+    navigate('/')
   }
 
   async function handleVote(evt){
@@ -137,7 +140,7 @@ function Post({post, setPost, deletePost}) {
             </button>
           </div>
           <form className="commentForm" onSubmit={handleSubmitComment}>
-              <input type="text" name="comment" onChange={handleCommentFormChange}/>
+              <input type="text" name="comment" onChange={handleCommentFormChange} value={commentFormData.comment}/>
               <input type="submit" value="Comment" />
           </form>
           <button className='compoundBtn' onClick={handleDisplayToggle}>

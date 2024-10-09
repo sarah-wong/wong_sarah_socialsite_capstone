@@ -25,7 +25,7 @@ function Feed({filter}) {
         const posts = await response.data.posts
         setFeed(posts)
       })()
-    },[])
+    },[filter])
   
     function setPost(idx, post){
       setFeed((feed)=>{

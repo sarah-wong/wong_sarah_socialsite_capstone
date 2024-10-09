@@ -22,7 +22,7 @@ function Profile() {
 
       setProfileData(profile)
     })()
-  },[])
+  },[username])
 
   async function handleFollow(evt){
       evt.preventDefault()

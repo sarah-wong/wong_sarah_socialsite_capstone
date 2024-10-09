@@ -38,7 +38,10 @@ form input{
   flex-flow:column nowrap;
   align-items:center;
   justify-content:space-evenly;
-  padding:0.5rem 1rem;
+  padding:0px 1rem;
+}
+input{
+  font-size:12pt;
 }
 
 .formError{
