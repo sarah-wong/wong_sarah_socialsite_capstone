@@ -89,7 +89,7 @@ function Login({loggedIn, setLoggedIn}) {
   return (
     <div className="page">
       {loggedIn&& <Navigate to='/' replace={true}/>}
-      <h1>Welcome to Your New Home</h1>
+      <h1>Welcome</h1>
       <div className="formContainer">
         <form action="" className="loginForm" onSubmit={handleLogin}>
           <h3>Sign In</h3>

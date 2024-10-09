@@ -12,6 +12,7 @@ input{
 .navbar{
   margin:auto;
   border:1px solid white;
+  border-radius:16px;
   padding:1rem;
   width:60vw;
   display:flex;
@@ -268,7 +269,7 @@ input{
 }
 .followBtn{
   font-weight:bold;
-  background: linear-gradient(plum 0%, pink 100%)
+  background: linear-gradient(plum 0%, pink 100%);
 }
 .unfollowBtn{
   font-weight:bold;
@@ -350,4 +351,55 @@ input{
 .voteBtnContainer{
   justify-content:center;
   padding:1rem;
+}
+.banner{
+  background: linear-gradient(
+    lightblue 0%,
+    skyblue 100%);
+  border-radius:32px;
+  display:flex;
+  flex-flow:column nowrap;
+  justify-content:space-evenly;
+  padding:2rem;
+  align-items:center;
+}
+.sitename{
+  font-weight:normal;
+}
+.logoDisplay{
+  background: linear-gradient(plum 0%, pink 100%);
+  mask-repeat:no-repeat;
+  mask-size: 100% 100%;
+  mask-image: url('/logo.svg');
+  height:250px;
+  width:500px;
+}
+.bannerMessage{
+  font-size:3rem;
+  display:grid;
+  grid-template-columns: 5fr 1fr 5fr;
+  width:100%;
+  gap:0.5ch;
+}
+.bannerMessage *:first-child{
+  text-align:right;
+}
+.radiantTxt{
+  background: linear-gradient(yellow 0%, gold 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 6px gold;
+}
+.tagline{
+  text-align:left;
+}
+.joinBtn{
+  font-size:1.5rem;
+  font-weight:bold;
+  margin-top:3rem;
+}
+.joinBtn:hover{
+  color:gold;
+  border-color:yellow;
+  box-shadow: 0px 0px 30px 5px gold;
 }

@@ -3,6 +3,7 @@ import {Route, Routes, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import './App.css'
 
+import Landing from './pages/Landing'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import PostForm from './pages/PostForm'
@@ -72,7 +73,7 @@ function App() {
         }
         <Navbar loggedIn={loggedIn}/>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={loggedIn?<Home/>:<Landing/>}/>
           <Route path='/login' element={
             <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
           }/>
