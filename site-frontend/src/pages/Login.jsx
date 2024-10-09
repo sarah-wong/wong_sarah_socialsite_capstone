@@ -42,63 +42,54 @@ function Login({loggedIn, setLoggedIn}) {
   async function handleLogin(evt){
     evt.preventDefault()
     setFormError('')
-    const response = await axios.post('http://localhost:7777/user/login',{
-      email: loginData.email,
-      password: loginData.password
-    })
-
     setLoginData({
       ...loginData,
       email:'',
       password:''
     })
-
-    if(response.status !== 200){
-      setFormError(
-        'Login Failed! No account linked to that email and password...'
-      )
-      console.log(response.statusText);
-    }
-    else{
+    try{
+      const response = await axios.post('http://localhost:7777/user/login',{
+        email: loginData.email,
+        password: loginData.password
+      })
       const token = response.data
       localStorage.setItem('userAuthToken', token)
       console.log(`userAuthToken: ${token}`);
       setLoggedIn(true)
     }
-    
-    
+    catch(err){
+      setFormError(
+        'Login Failed! No account linked to that email and password...'
+      )
+      console.log(err);
+    }  
   }
   async function handleSignup(evt){
     evt.preventDefault()
     setFormError('')
-
-    const response = await axios.post('http://localhost:7777/user', signupData)
-
     setSignupData({
       name:'',
       email:'',
       password:'',
       confirm:''
     })
-
-    if(response.status !== 201){
-      setFormError('Registration Failed!')
-      console.log(response.statusText);
-    }
-    else{
+    try{
+      const response = await axios.post('http://localhost:7777/user', signupData)
       const token = response.data
       localStorage.setItem('userAuthToken', token)
       console.log(`userAuthToken: ${token}`);
       setLoggedIn(true)
     }
-
-    
+    catch(err){
+      setFormError('Registration Failed!')
+      console.error(err);
+    }    
   }
 
   return (
     <div className="page">
       {loggedIn&& <Navigate to='/' replace={true}/>}
-      <h1>Login Page</h1>
+      <h1>Welcome to Your New Home</h1>
       <div className="formContainer">
         <form action="" className="loginForm" onSubmit={handleLogin}>
           <h3>Sign In</h3>
@@ -109,14 +100,19 @@ function Login({loggedIn, setLoggedIn}) {
           value={loginData.password}
           onChange={handleLoginFieldChange}/>
           <div className="optionBox">
-            <input type="checkbox" name="remember"
+            <input type="checkbox" name="showPassword"
             checked={showPassword}
             onChange={()=>setShowPassword(!showPassword)}/>
-            <label htmlFor="remember"> {showPassword?'hide':'show'} password</label>
+            <label htmlFor="showPassword"> {showPassword?'hide':'show'} password</label>
           </div>
           <br />
           <button type="submit">Login</button>
         </form>
+        <div className="middle">
+          <div className="vline"></div>
+          <h2>OR</h2>
+          <div className="vline"></div>
+        </div>
         <form action="" className="signupForm" onSubmit={handleSignup}>
           <h3>Register</h3>
           <input type="text" name="name" placeholder='username' required

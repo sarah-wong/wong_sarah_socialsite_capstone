@@ -5,7 +5,7 @@ function Home() {
 
   return (
     <div className="page">
-      <h1>Home Page</h1>
+      <h1>The Main Feed</h1>
       <Feed filter={null}/>
     </div>
   )

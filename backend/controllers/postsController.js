@@ -52,14 +52,14 @@ async function commentOnPost(req, res){
 }
 
 // READ
-async function fetchPost(req, res){
+async function fetchPost(req, res, next){
     const id = req.params.id
     const post = await Post.findById(id)
     // 200 Success
     res.status(200).json({post:post})
 }
 
-async function fetchPosts(req, res){    
+async function fetchPosts(req, res, next){    
     // accepted filters are: [title, user, tags, before, after, limit]
 
     const query = req.query
@@ -100,7 +100,7 @@ async function fetchPosts(req, res){
 
 // UPDATE
 
-async function editPost(req, res){
+async function editPost(req, res, next){
     const id = req.params.id
     const {title, content, username, tags} = req.body
     const post = await Post.findById(id);
@@ -126,7 +126,7 @@ async function editPost(req, res){
     }
 }
 
-async function voteOnPost(req, res){
+async function voteOnPost(req, res, next){
     const postId = req.params.id
     const userId = req.user._id
     const {vote} = req.body
@@ -151,7 +151,7 @@ async function voteOnPost(req, res){
 
 // DELETE
 
-async function deletePost(req, res){
+async function deletePost(req, res, next){
     const id = req.params.id
     const post = await Post.findById(id);
     

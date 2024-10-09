@@ -12,7 +12,7 @@ function createJWT(user){
     )
 }
 
-async function createUser(req, res){
+async function createUser(req, res, next){
     console.log('signup request recieved');
     const saltRounds = 10
     const {name, email, password, confirm} = req.body
@@ -48,13 +48,13 @@ async function createUser(req, res){
     })
 }
 
-async function login(req, res){
+async function login(req, res, next){
     const {email, password} = req.body
     // console.log(`login attempt: ${email}`);
     const user = await User.findOne({email: email})
     if (!user) {
         // 400 Bad Request
-        res.status(400).json('Bad Credentials')
+        res.status(400).json({message: 'No Account'})
     }
 
     const match = await bcrypt.compare(password, user.password);
@@ -67,7 +67,7 @@ async function login(req, res){
     res.status(200).json(createJWT(user))
 }
 
-async function getCurrentUser(req, res){
+async function getCurrentUser(req, res, next){
     if(!req.user){
         // 401 Unauthorized
         res.status(401).json('Not Logged In')

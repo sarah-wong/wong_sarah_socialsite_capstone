@@ -9,6 +9,7 @@ import PostForm from './pages/PostForm'
 import Profile from './pages/Profile'
 
 import Navbar from './components/Navbar'
+import NewPostBtn from './components/NewPostBtn'
 
 export const CurrentUserContext = createContext()
 
@@ -66,6 +67,7 @@ function App() {
             <button onClick={()=>setLoggedIn(false)}>
               Log Out
             </button>
+            <NewPostBtn/>
           </div>
         }
         <Navbar loggedIn={loggedIn}/>

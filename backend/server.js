@@ -25,9 +25,13 @@ app.use('/post', postRouter)
 app.use('/profile', profileRouter)
 
 app.use((err, req, res, next)=>{
-    console.error(err);
-    // 500 Internal Server Error
-    res.status(500).send('Whoops...')
+    if(err)
+    {
+        console.error(err);
+        // 500 Internal Server Error
+        res.status(500).send('Whoops...')
+    }
+   next()
 })
 
 

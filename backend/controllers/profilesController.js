@@ -15,7 +15,7 @@ async function editProfile(req, res){
     res.status(200).json({profile:updatedProfile})
 }
 
-async function updateFollowers(req, res){
+async function updateFollowers(req, res, next){
     const follow = req.body.follow
 
     const userId = req.user._id

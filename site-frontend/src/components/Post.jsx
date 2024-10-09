@@ -9,6 +9,7 @@ function Post({post, setPost, deletePost}) {
   const currentUser = useContext(CurrentUserContext)
   const token = localStorage.getItem('userAuthToken')
   const [vote, setVote] = useState(0)
+  const [netVotes, setNetVotes] = useState(0)
   const [commentFormData, setCommentFormData] = useState({
     comment: ''
   })
@@ -72,6 +73,19 @@ function Post({post, setPost, deletePost}) {
   }
   useEffect(checkVote, [])
 
+  function calculateNetVotes(){
+    const votes = post.meta.votes
+    let sum = 0
+    for (const uid in votes) {
+      
+      if(uid !== String(currentUser._id)){
+        sum += votes[uid]
+      }
+    }
+    setNetVotes(sum + vote)
+  }
+  useEffect(calculateNetVotes, [vote])
+
   function formatDate(createdAt){
     const date = new Date(createdAt)
     const dateStr = date.toLocaleTimeString('en-US',{
@@ -129,11 +143,17 @@ function Post({post, setPost, deletePost}) {
               ))}
           </div>
         </div>
-          <div className="voteBtnContainer">
-            <button className={"iconBtn " + (vote===1?"likeSelect":"like")}
-            value={1} onClick={handleVote}>
+          <div className="voteBtnContainer flexbox">
+            <button
+              className={"iconBtn " + (vote===1?"likeSelect":"like")}
+              value={1}
+              onClick={handleVote}
+              alt='like'>
 
             </button>
+            <div className="voteCounter">
+              <b>{netVotes>0&&'+'}{netVotes}</b>
+            </div>
             <button className={"iconBtn " + (vote===-1?"dislikeSelect":"dislike")}
             value={-1} onClick={handleVote}>
 
@@ -146,7 +166,7 @@ function Post({post, setPost, deletePost}) {
           <button className='compoundBtn' onClick={handleDisplayToggle}>
             {displayComments?
               <img alt="V" className="iconBtn menu-down" />:
-              <img alt="->" className="iconBtn menu-right" />
+              <img alt=">" className="iconBtn menu-right" />
             }
             <span>
               {displayComments?
