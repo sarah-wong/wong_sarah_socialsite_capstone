@@ -15,3 +15,5 @@ Going forward, I want to implement:
 - Increased password requirements and other securities
 - Storage for files and other forms of multimedia for posts
 - Support for Unicode and other rich text
+- Internal user messaging system
+- Search features using the pre-existing tagging feature
