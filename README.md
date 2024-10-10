@@ -12,11 +12,10 @@ The **/site-frontend** folder is a ReactJS App built with Vite, which acts as th
 
 ## Planned Features:
 
-Going forward, I want to implement:
-
 - Increased password requirements
 - Email verification on account creation
 - Storage for files and other forms of multimedia for posts
 - Support for Unicode and other rich text markdown
 - Internal messaging
-- Search feature using the pre-existing tagging system
+- Search feature using the pre-existing tagging system, as well as for profiles and post content
+- ability to "@-tag" other users
