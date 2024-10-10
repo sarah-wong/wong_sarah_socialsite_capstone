@@ -2,7 +2,7 @@
 
 This is a full-stack social media demo I made as my capstone project for my certification course with Per Scholas
 
-## Structure
+## Structure:
 
 The */backend* folder contains an ExpressJS server, acting as a proxy to connect to MongoDB, routing requests to the app's storage of user data, as well as posts, comments, and account profiles
 
