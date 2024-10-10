@@ -12,8 +12,9 @@ The */site-frontend* folder is a ReactJS App built with Vite, which acts as the 
 
 Going forward, I want to implement:
 
-- Increased password requirements and other securities
+- Increased password requirements
+- Email verification on account creation
 - Storage for files and other forms of multimedia for posts
-- Support for Unicode and other rich text
-- Internal user messaging system
-- Search features using the pre-existing tagging feature
+- Support for Unicode and other rich text markdown
+- Internal messaging
+- Search feature using the pre-existing tagging system
